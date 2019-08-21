@@ -1,4 +1,5 @@
-package com.liga1920;
+package ligafx.liga1920;
 
 public class Controller {
+
 }
