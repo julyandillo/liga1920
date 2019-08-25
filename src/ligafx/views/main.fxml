@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ligafx.controllers.MainController">
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="80.0" spacing="20.0" style="-fx-background-color: #10202a;" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <Button mnemonicParsing="false" styleClass="boton-menu" text="Button" />
+            <Button mnemonicParsing="false" styleClass="boton-menu" text="Button" />
+            <Button mnemonicParsing="false" styleClass="boton-menu" text="Button" />
+            <Button mnemonicParsing="false" styleClass="boton-menu" text="Button" />
+            <Button mnemonicParsing="false" styleClass="boton-menu" text="Button" />
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets top="50.0" />
+         </padding>
+      </VBox>
+   </left>
+   <center>
+      <Pane style="-fx-background-color: #254150;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" layoutX="80.0" layoutY="69.0" prefHeight="462.0" prefWidth="580.0">
+               <children>
+                  <ImageView fx:id="logoImageView" fitHeight="460.0" fitWidth="580.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

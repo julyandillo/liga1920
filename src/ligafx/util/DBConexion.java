@@ -24,8 +24,10 @@ public class DBConexion {
                 String user = ReadIni.getDbUser();
                 String password = ReadIni.getDbPassword();
                 String database = ReadIni.getDbName();
+                String url = "jdbc:mysql://" + server + "/" + database + "?serverTimezone=UTC";
 
-                conexion = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database, user, password);
+                conexion = DriverManager.getConnection(url, user, password);
+
             }  catch (SQLException e) {
                 LOGGER.log(Level.SEVERE, Util.printStackTrace(e));
             }

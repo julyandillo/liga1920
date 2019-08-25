@@ -53,5 +53,11 @@ public final class ReadIni {
 
         return config.getProperty("server");
     }
+
+    public static String getDebugMode() {
+        ReadIni.loadConfig();
+
+        return config.getProperty("log");
+    }
 }
 
