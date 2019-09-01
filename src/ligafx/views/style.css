@@ -9,3 +9,7 @@
     -fx-background-color: #254150;
     -fx-text-fill: #92daec;
 }
+
+.boton-clasificacion {
+    -fx-graphic: url('../../resources/icons/clasificacion.png');
+}

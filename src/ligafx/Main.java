@@ -16,6 +16,7 @@ import java.util.logging.*;
 public class Main extends Application {
 
     private static final Logger LOG_RAIZ = Logger.getLogger("ligafx");
+
     /*
     cuando se escriba en este logger, como no tiene ningun handler ascenderá hasta que encuentre un logger
     que tenga, por eso se crea el LOG_RAIZ, todos los demás son hijos de este así que siempre se utilizarán
@@ -49,12 +50,11 @@ public class Main extends Application {
             if (ReadIni.getDebugMode().equals("true")) {
                 consoleHandler.setLevel(Level.ALL);
                 fileHandler.setLevel(Level.ALL);
+                LOGGER.log(Level.INFO, "MODO DEBUG ACTIVADO");
             } else {
                 consoleHandler.setLevel(Level.SEVERE);
                 fileHandler.setLevel(Level.SEVERE);
             }
-
-            LOGGER.log(Level.INFO, "MODO DEBUG ACTIVADO");
 
             DBConexion.getConexion();
             launch(args);
