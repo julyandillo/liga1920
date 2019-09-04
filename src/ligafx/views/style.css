@@ -11,5 +11,5 @@
 }
 
 .boton-clasificacion {
-    -fx-graphic: url('../../resources/icons/clasificacion.png');
+    -fx-graphic: url('../resources/icons/clasificacion.png');
 }

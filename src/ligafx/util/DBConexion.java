@@ -1,5 +1,7 @@
 package ligafx.util;
 
+import javafx.scene.control.Alert;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,7 +12,7 @@ public class DBConexion {
 
     private static Connection conexion = null;
 
-    private final static Logger LOGGER = Logger.getLogger(DBConexion.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DBConexion.class.getName());
 
     private DBConexion() {
         throw new IllegalStateException("La clase 'Conexion' no se puede instanciar. Utiliza 'getConexion' para" +
@@ -29,6 +31,7 @@ public class DBConexion {
                 conexion = DriverManager.getConnection(url, user, password);
 
             }  catch (SQLException e) {
+                Util.mostrarMensaje("No se puede conectar con la base de datos", Alert.AlertType.ERROR);
                 LOGGER.log(Level.SEVERE, Util.printStackTrace(e));
             }
         }

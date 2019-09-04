@@ -33,7 +33,8 @@ public class Main extends Application {
 
         primaryStage.setTitle("La Liga 2019/2020");
         primaryStage.setScene(scene);
-        primaryStage.getIcons().add(new Image("file:resources/logo.png"));
+        // es lo mismo que si se pone /ligafx/resources/logo.png
+        primaryStage.getIcons().add(new Image(getClass().getResource("resources/logo.png").toExternalForm()));
         primaryStage.show();
     }
 
@@ -56,7 +57,7 @@ public class Main extends Application {
                 fileHandler.setLevel(Level.SEVERE);
             }
 
-            DBConexion.getConexion();
+            //DBConexion.getConexion();
             launch(args);
 
         } catch (IOException ex) {

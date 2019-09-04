@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 public class MainController implements Initializable {
 
-    private final static Logger LOGGER = Logger.getLogger(MainController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MainController.class.getName());
 
     @FXML
     private ImageView logoImageView;
@@ -43,7 +43,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        logoImageView.setImage(new Image("file:resources/logo.png"));
+        logoImageView.setImage(new Image("/ligafx/resources/logo.png"));
     }
 
     @FXML
