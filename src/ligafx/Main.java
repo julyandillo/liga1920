@@ -34,7 +34,7 @@ public class Main extends Application {
         primaryStage.setTitle("La Liga 2019/2020");
         primaryStage.setScene(scene);
         // es lo mismo que si se pone /ligafx/resources/logo.png
-        primaryStage.getIcons().add(new Image(getClass().getResource("resources/logo.png").toExternalForm()));
+        primaryStage.getIcons().add(new Image(getClass().getResource("resources/logo2.png").toExternalForm()));
         primaryStage.show();
     }
 

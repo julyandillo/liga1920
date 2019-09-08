@@ -13,3 +13,19 @@
 .boton-clasificacion {
     -fx-graphic: url('../resources/icons/clasificacion.png');
 }
+
+.boton-calendario {
+    -fx-graphic: url('../resources/icons/calendar.png');
+}
+
+.boton-equipos {
+    -fx-graphic: url('../resources/icons/equipos.png');
+}
+
+.boton-arbitros {
+    -fx-graphic: url('../resources/icons/arbitro.png');
+}
+
+.boton-estadisticas {
+    -fx-graphic: url('../resources/icons/graph.png');
+}
