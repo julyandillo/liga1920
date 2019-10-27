@@ -2,9 +2,7 @@ package ligafx.util;
 
 import javafx.scene.control.Alert;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,11 +29,31 @@ public class DBConexion {
                 conexion = DriverManager.getConnection(url, user, password);
 
             }  catch (SQLException e) {
-                Util.mostrarMensaje("No se puede conectar con la base de datos", Alert.AlertType.ERROR);
+                Util.mostrarMensaje("ERROR: NO SE PUEDE CONECTAR CON LA BASE DE DATOS", Alert.AlertType.ERROR);
                 LOGGER.log(Level.SEVERE, Util.printStackTrace(e));
             }
         }
 
         return conexion;
+    }
+
+    public static void closeResources(PreparedStatement ps, ResultSet rs)  {
+        if (ps != null) {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                Util.mostrarMensaje("ERROR AL CERRAR UN RECURSO: PreparedStatement", Alert.AlertType.ERROR);
+                LOGGER.log(Level.SEVERE, Util.printStackTrace(e));
+            }
+        }
+
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                Util.mostrarMensaje("ERROR AL CERRAR UN RECURSO: ResultSet", Alert.AlertType.ERROR);
+                LOGGER.log(Level.SEVERE, Util.printStackTrace(e));
+            }
+        }
     }
 }

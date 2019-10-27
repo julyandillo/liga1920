@@ -1,17 +1,14 @@
 package ligafx.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import ligafx.util.Util;
+import javafx.scene.layout.VBox;
+import ligafx.menu.BotonInvoker;
+import ligafx.menu.BotonMenu;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
@@ -24,43 +21,44 @@ public class MainController implements Initializable {
     private ImageView logoImageView;
 
     @FXML
+    private VBox vboxMenu;
+
+    @FXML
     private BorderPane mainBorderPane;
-
-    @FXML
-    private Button botonClasificacion;
-
-    @FXML
-    private Button botonCalendario;
-
-    @FXML
-    private Button botonEquipos;
-
-    @FXML
-    private Button botonArbitros;
-
-    @FXML
-    private Button botonEstadisticas;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         logoImageView.setImage(new Image("/ligafx/resources/logo.png"));
+
+        vboxMenu.getChildren().add(new BotonInvoker(mainBorderPane,
+                new BotonMenu("clasificacion.fxml", "boton-clasificacion", "Clasificacion")));
+        vboxMenu.getChildren().add(new BotonInvoker(mainBorderPane,
+                new BotonMenu("calendario.fxml", "boton-calendario", "Calendario")));
+        vboxMenu.getChildren().add(new BotonInvoker(mainBorderPane,
+                new BotonMenu("equipos.fxml", "boton-equipos", "Equipos")));
+        vboxMenu.getChildren().add(new BotonInvoker(mainBorderPane,
+                new BotonMenu("arbitros.fxml", "boton-arbitros", "Arbitros")));
+        vboxMenu.getChildren().add(new BotonInvoker(mainBorderPane,
+                new BotonMenu("estadisticas.fxml", "boton-estadisticas", "Estadisticas")));
+
     }
 
+    /*
     @FXML
     private void buttonAction(ActionEvent event) {
         Object source = event.getSource();
         String url = "";
 
         if (source.equals(botonClasificacion)) {
-            url = "/vistas/clasificacion.xml";
+            url = "../views/clasificacion.fxml";
         } else if (source.equals(botonCalendario)) {
-            url = "/vistas/calendario.xml";
+            url = "../views/calendario.fxml";
         } else if (source.equals(botonEquipos)) {
-            url = "/vistas/equipos.xml";
+            url = "../views/equipos.fxml";
         } else if (source.equals(botonArbitros)) {
-            url = "/vistas/arbitros.xml";
+            url = "../views/arbitros.fxml";
         } else if (source.equals(botonEstadisticas)) {
-            url = "/vistas/estadisticas.xml";
+            url = "../views/estadisticas.fxml";
         }
 
         try {
@@ -70,4 +68,5 @@ public class MainController implements Initializable {
             LOGGER.severe(Util.printStackTrace(ex));
         }
     }
+    */
 }

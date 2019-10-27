@@ -6,9 +6,7 @@ import java.util.List;
 
 public interface EquipoDAO extends Cargable <Equipo, Integer> {
 
-    @Override
-    Equipo cargar(Integer id);
+    List<String> cargarNombres() throws DAOException;
 
-    @Override
-    List<Equipo> cargarTodos();
+    Equipo cargar(String nombre) throws DAOException;
 }

@@ -1,3 +1,33 @@
+.fondo-panel {
+    -fx-background-color: #FFFDE8;
+}
+
+.label-color {
+    -fx-color: #254150
+}
+
+.label-amarillo {
+    -fx-text-fill: #FEF9CE;
+    -fx-font-weight: bold;
+}
+
+.label-azul-claro {
+    -fx-text-fill: #92daec;
+    -fx-font-weight: bold;
+}
+
+.boton:hover {
+    -fx-background-color: #92daec;
+    -fx-text-fill: #254150;
+}
+
+.boton {
+    -fx-border-color: #92daec;
+    -fx-background-color: #254150;
+    -fx-text-fill: #92daec;
+    -fx-cursor: hand;
+}
+
 .boton-menu:hover {
     -fx-background-color: #92daec;
     -fx-text-fill: #254150;
@@ -8,6 +38,10 @@
     -fx-cursor: hand;
     -fx-background-color: #254150;
     -fx-text-fill: #92daec;
+}
+
+.boton-detalles {
+    -fx-graphic: url('../resources/icons/detail.png');
 }
 
 .boton-clasificacion {
@@ -28,4 +62,16 @@
 
 .boton-estadisticas {
     -fx-graphic: url('../resources/icons/graph.png');
+}
+
+.boton-plantilla {
+    -fx-graphic: url('../resources/icons/plantilla16.png');
+}
+
+.fondo-impar {
+    -fx-background-color: #254150;
+}
+
+.fondo-par {
+    -fx-background-color: #16242F;
 }

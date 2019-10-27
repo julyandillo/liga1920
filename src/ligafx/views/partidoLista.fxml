@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="40.0" prefWidth="690.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ligafx.controllers.PartidoListaController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="690.0">
+         <children>
+            <Label fx:id="labelEquipoLocal" alignment="CENTER_RIGHT" maxWidth="125.0" minWidth="125.0" text="Label">
+               <HBox.margin>
+                  <Insets left="60.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <ImageView fx:id="imageViewLocal" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="20.0" right="10.0" />
+               </HBox.margin></ImageView>
+            <Label fx:id="labelGolesLocal" alignment="CENTER" minWidth="50.0" text="Label">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></Label>
+            <Label styleClass="label-azul-claro" text="-" />
+            <Label fx:id="labelGolesVisitante" alignment="CENTER" minWidth="50.0" text="Label">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></Label>
+            <ImageView fx:id="imageViewVisitante" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin></ImageView>
+            <Label fx:id="labelEquipoVisitante" maxWidth="125.0" minWidth="125.0" text="Label">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin></Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="buttonDetalles" mnemonicParsing="false">
+                     <styleClass>
+                        <String fx:value="boton" />
+                        <String fx:value="boton-detalles" />
+                     </styleClass></Button>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

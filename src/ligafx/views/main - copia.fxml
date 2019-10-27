@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ligafx.controllers.MainController">
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="80.0" spacing="20.0" style="-fx-background-color: #10202a;" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <Button fx:id="botonClasificacion" mnemonicParsing="false" onAction="#buttonAction">
+               <styleClass>
+                  <String fx:value="boton-menu" />
+                  <String fx:value="boton-clasificacion" />
+               </styleClass></Button>
+            <Button fx:id="botonCalendario" mnemonicParsing="false" onAction="#buttonAction">
+               <styleClass>
+                  <String fx:value="boton-menu" />
+                  <String fx:value="boton-calendario" />
+               </styleClass></Button>
+            <Button fx:id="botonEquipos" mnemonicParsing="false" onAction="#buttonAction">
+               <styleClass>
+                  <String fx:value="boton-equipos" />
+                  <String fx:value="boton-menu" />
+               </styleClass></Button>
+            <Button fx:id="botonArbitros" mnemonicParsing="false" onAction="#buttonAction">
+               <styleClass>
+                  <String fx:value="boton-arbitros" />
+                  <String fx:value="boton-menu" />
+               </styleClass></Button>
+            <Button fx:id="botonEstadisticas" mnemonicParsing="false" onAction="#buttonAction">
+               <styleClass>
+                  <String fx:value="boton-estadisticas" />
+                  <String fx:value="boton-menu" />
+               </styleClass></Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets top="50.0" />
+         </padding>
+      </VBox>
+   </left>
+   <center>
+      <Pane styleClass="fondo-panel" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" layoutX="80.0" layoutY="69.0" prefHeight="462.0" prefWidth="580.0">
+               <children>
+                  <ImageView fx:id="logoImageView" fitHeight="460.0" fitWidth="580.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

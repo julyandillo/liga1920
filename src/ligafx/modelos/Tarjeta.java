@@ -1,7 +1,5 @@
 package ligafx.modelos;
 
-import ligafx.util.TipoTarjeta;
-
 public class Tarjeta extends Evento {
 
     private TipoTarjeta tipo;

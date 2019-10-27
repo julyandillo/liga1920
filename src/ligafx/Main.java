@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import ligafx.util.DBConexion;
 import ligafx.util.ReadIni;
 import ligafx.util.Util;
 
@@ -57,7 +56,6 @@ public class Main extends Application {
                 fileHandler.setLevel(Level.SEVERE);
             }
 
-            //DBConexion.getConexion();
             launch(args);
 
         } catch (IOException ex) {
