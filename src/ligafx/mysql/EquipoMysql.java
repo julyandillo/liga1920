@@ -1,5 +1,6 @@
 package ligafx.mysql;
 
+import ligafx.builders.EquipoBuilder;
 import ligafx.dao.DAOException;
 import ligafx.dao.DAOManager;
 import ligafx.dao.EquipoDAO;
@@ -117,19 +118,17 @@ public class EquipoMysql implements EquipoDAO {
     }
 
     private Equipo setValores(ResultSet rs) throws SQLException, DAOException {
-        Equipo equipo = new Equipo(rs.getInt("id_equipo"));
-        equipo.setDireccion(rs.getString("direccion"));
-        equipo.setEntrenador(rs.getString("entrenador"));
-        equipo.setEscudo(rs.getString("escudo"));
-        equipo.setFundacion(rs.getInt("fundacion"));
-        equipo.setNombre(rs.getString("nombre"));
-        equipo.setNombreClub(rs.getString("nombre_completo"));
-        equipo.setPresidente(rs.getString("presidente"));
-        equipo.setTelefono(rs.getString("telefono"));
-        equipo.setWeb(rs.getString("web"));
-
-        equipo.setEstadio(DAOManager.getEstadioDAO().cargar(rs.getInt("id_estadio")));
-
-        return equipo;
+        return new EquipoBuilder().id(rs.getInt("id_equipo"))
+                .direccion(rs.getString("direccion"))
+                .entrenador(rs.getString("entrenador"))
+                .escudo(rs.getString("escudo"))
+                .fundacion(rs.getInt("fundacion"))
+                .nombre(rs.getString("nombre"))
+                .nombreClub(rs.getString("nombre_completo"))
+                .presidente(rs.getString("presidente"))
+                .telefono(rs.getString("telefono"))
+                .web(rs.getString("web"))
+                .estadio(DAOManager.getEstadioDAO().cargar(rs.getInt("id_estadio")))
+                .build();
     }
 }

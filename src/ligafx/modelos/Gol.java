@@ -6,6 +6,20 @@ public class Gol extends Evento {
 
     private boolean propiaMeta;
 
+    public Gol() {
+        super(0, 0);
+
+        this.penalti = false;
+        this.propiaMeta = false;
+    }
+
+    public Gol(int minuto) {
+        super(minuto);
+
+        this.penalti = false;
+        this.propiaMeta = false;
+    }
+
     public Gol(int minuto, boolean penalti, boolean propiaMeta) {
         super(minuto);
 
@@ -26,5 +40,17 @@ public class Gol extends Evento {
 
     public boolean isPropiaMeta() {
         return this.propiaMeta;
+    }
+
+    public void setPenalti(boolean penalti) {
+        this.penalti = penalti;
+    }
+
+    public void setPropiaMeta(boolean propiaMeta) {
+        this.propiaMeta = propiaMeta;
+    }
+
+    public String detalle() {
+        return this.minuto + (this.penalti ? " (p)" : "") + (this.propiaMeta ? " (pp)" : "");
     }
 }

@@ -14,6 +14,10 @@ public class Evento extends Entidad {
         this.minuto = minuto;
     }
 
+    public void setMinuto(int minuto) {
+        this.minuto = minuto;
+    }
+
     public int getMinuto() {
         return this.minuto;
     }

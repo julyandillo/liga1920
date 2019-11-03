@@ -1,6 +1,8 @@
 package ligafx.modelos;
 
-import java.util.Date;
+import ligafx.decoradores.GolDecorator;
+
+import java.util.*;
 
 public class Partido extends Entidad {
 
@@ -16,19 +18,28 @@ public class Partido extends Entidad {
 
     private boolean disputado;
 
+    private Map<TipoEquipo, List<GolDecorator>> goles;
+
+    private Map<TipoEquipo, List<Tarjeta>> tarjetas;
+
     public Partido(int id) {
+
         super(id);
     }
 
     public Partido(int id, Equipo equipoLocal, Equipo equipoVisitante, int golesLocal, int golesVisitante, Date fecha,
                    boolean disputado) {
         super(id);
+
         this.equipoLocal = equipoLocal;
         this.equipoVisitante = equipoVisitante;
         this.golesLocal = golesLocal;
         this.golesVisitante = golesVisitante;
         this.fecha = fecha;
         this.disputado = disputado;
+
+        this.goles = new HashMap<>();
+        this.tarjetas = new HashMap<>();
     }
 
     public Equipo getEquipoLocal() {
@@ -77,5 +88,41 @@ public class Partido extends Entidad {
 
     public void setDisputado(boolean disputado) {
         this.disputado = disputado;
+    }
+
+    public void agregarTarjeta(Tarjeta tarjeta, TipoEquipo equipo) {
+        if (!this.tarjetas.containsKey(equipo)) {
+            this.tarjetas.put(equipo, new ArrayList<>());
+        }
+
+        this.tarjetas.get(equipo).add(tarjeta);
+    }
+
+    public void setTarjetas(List<Tarjeta> tarjetas, TipoEquipo equipo) {
+        this.tarjetas.put(equipo, tarjetas);
+    }
+
+    public List<Tarjeta> getTarjetas(TipoEquipo equipo) {
+        return this.tarjetas.get(equipo);
+    }
+
+    public void agregarGol(GolDecorator gol, TipoEquipo equipo) {
+        if (!this.goles.containsKey(equipo)) {
+            this.goles.put(equipo, new ArrayList<GolDecorator>());
+        }
+
+        this.goles.get(equipo).add(gol);
+    }
+
+    public void setGoles(List<GolDecorator> goles, TipoEquipo equipo) {
+        this.goles.put(equipo, goles);
+    }
+
+    public void setGoles(Map<TipoEquipo, List<GolDecorator>> goles) {
+        this.goles = goles;
+    }
+
+    public List<GolDecorator> getGoles(TipoEquipo equipo) {
+        return this.goles.get(equipo);
     }
 }

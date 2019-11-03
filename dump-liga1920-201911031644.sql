@@ -16,6 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `cambio`
+--
+
+DROP TABLE IF EXISTS `cambio`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cambio` (
+  `id_cambio` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `minuto` tinyint(3) unsigned DEFAULT NULL,
+  `id_partido` smallint(5) unsigned DEFAULT NULL,
+  `id_jugador_sale` mediumint(8) unsigned DEFAULT NULL,
+  `id_jugador_entra` mediumint(8) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id_cambio`),
+  KEY `cambio_fk` (`id_partido`),
+  KEY `cambio_fk_1` (`id_jugador_sale`),
+  KEY `cambio_fk_2` (`id_jugador_entra`),
+  CONSTRAINT `cambio_fk` FOREIGN KEY (`id_partido`) REFERENCES `partido` (`id_partido`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `cambio_fk_1` FOREIGN KEY (`id_jugador_sale`) REFERENCES `jugador` (`id_jugador`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `cambio_fk_2` FOREIGN KEY (`id_jugador_entra`) REFERENCES `jugador` (`id_jugador`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cambio`
+--
+
+LOCK TABLES `cambio` WRITE;
+/*!40000 ALTER TABLE `cambio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cambio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `equipo`
 --
 
@@ -76,6 +108,37 @@ LOCK TABLES `estadio` WRITE;
 /*!40000 ALTER TABLE `estadio` DISABLE KEYS */;
 INSERT INTO `estadio` VALUES (1,'San Mamés',0,'',0,'f020571f7c260516dfab3b9dc5df6348.png'),(2,'Estadio Wanda Metropolitano',0,'',0,'935f92c15c4d3442ef3f6d843beba0e1.png'),(3,'Estadio El Sadar',0,'',0,'d10f766b1612a516ea623116f0c1f9ce.png'),(4,'RCDE Stadium',0,'',0,'306cc02af120e092849ddf38954bcb3e.png'),(5,'Camp Nou',0,'',0,'0623ce55ec3ee4e439ed6d24fe2ba77b.png'),(6,'Coliseum Alfonso Pérez',0,'',0,'b881ba5a6846e7ccdbc3a6a75a2c5e69.png'),(7,'Estadio Nuevo Los Cármenes',0,'',0,'4de53714b029bf44d86c53bd0d6835d3.png'),(8,'Estadio Santiago Bernabéu',0,'',0,'e6695a8184f41deea3ad87dd9c12ab1f.png'),(9,'Estadio Ciudad de Valencia',0,'',0,'24140d1bf09080fd77078189f24d1b3d.png'),(10,'Estadio de Son Moix',0,'',0,'6f67f604b5025b10ef0dc14d700586ae.png'),(11,'Estadio Benito Villamarín',0,'',0,'f211dabccff68741a75d175307d78f59.png'),(12,'Reale Arena',0,'',0,'b20727f80d7b4c9d5ad18acec9b663c5.png'),(13,'Estadio de la Cerámica',0,'',0,'ac940b8f6681d614e337d20d5bf7f0a8.png'),(14,'Estadio de Mestalla',0,'',0,'984682326cdbb55f5034778b7690a795.png'),(15,'Estadio Municipal José Zorrilla',0,'',0,'5dfdde2dab7cf9814c6f008591a3a4b5.png'),(16,'Estadio de Mendizorroza',0,'',0,'6b906780ba96aa6689192fb9afcaac6b.png'),(17,'Estadio Municipal de Ipurúa',0,'',0,'3da691cda91766963efc021a8cf5dd77.png'),(18,'Estadio de Balaídos',0,'',0,'0aef263ef366bd0b81369408adb27cd6.png'),(19,'Estadio Ramón Sánchez Pizjuán',0,'',0,'11217561bbfa63ef6fa59c360394a9fc.png'),(20,'Estadio Municipal de Butarque',0,'',0,'2b7303ff6a9beaf1b4dc88599116df55.png');
 /*!40000 ALTER TABLE `estadio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gol`
+--
+
+DROP TABLE IF EXISTS `gol`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `gol` (
+  `id_gol` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `minuto` smallint(5) unsigned NOT NULL,
+  `penalti` bit(1) DEFAULT b'0',
+  `propia_meta` bit(1) DEFAULT b'0',
+  `id_jugador` mediumint(8) unsigned DEFAULT NULL,
+  `id_partido` smallint(5) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id_gol`),
+  KEY `gol_fk` (`id_jugador`),
+  KEY `gol_fk_1` (`id_partido`),
+  CONSTRAINT `gol_fk` FOREIGN KEY (`id_jugador`) REFERENCES `jugador` (`id_jugador`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `gol_fk_1` FOREIGN KEY (`id_partido`) REFERENCES `partido` (`id_partido`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gol`
+--
+
+LOCK TABLES `gol` WRITE;
+/*!40000 ALTER TABLE `gol` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gol` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -174,6 +237,36 @@ INSERT INTO `partido` VALUES (2,1,0,'2019-08-16 21:00:00',1,1,5,1),(3,NULL,NULL,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tarjeta`
+--
+
+DROP TABLE IF EXISTS `tarjeta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tarjeta` (
+  `id_tarjeta` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `minuto` tinyint(3) unsigned NOT NULL,
+  `tipo` tinyint(1) unsigned DEFAULT NULL,
+  `id_jugador` mediumint(8) unsigned DEFAULT NULL,
+  `id_partido` smallint(5) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id_tarjeta`),
+  KEY `tarjeta_fk` (`id_partido`),
+  KEY `tarjeta_fk_1` (`id_jugador`),
+  CONSTRAINT `tarjeta_fk` FOREIGN KEY (`id_partido`) REFERENCES `partido` (`id_partido`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tarjeta_fk_1` FOREIGN KEY (`id_jugador`) REFERENCES `jugador` (`id_jugador`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tarjeta`
+--
+
+LOCK TABLES `tarjeta` WRITE;
+/*!40000 ALTER TABLE `tarjeta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tarjeta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping routines for database 'liga1920'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -186,4 +279,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-27 14:09:31
+-- Dump completed on 2019-11-03 16:44:13

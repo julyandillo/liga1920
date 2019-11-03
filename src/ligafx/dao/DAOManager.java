@@ -1,10 +1,7 @@
 package ligafx.dao;
 
 import ligafx.modelos.Jornada;
-import ligafx.mysql.EquipoMysql;
-import ligafx.mysql.EstadioMysql;
-import ligafx.mysql.JornadaMysql;
-import ligafx.mysql.PartidoMysql;
+import ligafx.mysql.*;
 
 public class DAOManager {
 
@@ -15,6 +12,8 @@ public class DAOManager {
     private static PartidoDAO partidoDAO = null;
 
     private static JornadaDAO jornadaDAO = null;
+
+    private static GolDAO golDAO = null;
 
     private DAOManager() {
         throw new IllegalStateException("Esta clase no puede ser instanciada");
@@ -50,5 +49,13 @@ public class DAOManager {
         }
 
         return jornadaDAO;
+    }
+
+    public static GolDAO getGolDAO() {
+        if (golDAO == null) {
+            golDAO = new GolMysql();
+        }
+
+        return golDAO;
     }
 }
