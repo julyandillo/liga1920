@@ -16,6 +16,10 @@ public class Tarjeta extends Evento {
         this.tipo = tipo;
     }
 
+    public void setTipo(TipoTarjeta tipo) {
+        this.tipo = tipo;
+    }
+
     public TipoTarjeta getTipo() {
         return this.tipo;
     }
