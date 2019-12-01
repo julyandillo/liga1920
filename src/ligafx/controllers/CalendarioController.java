@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import ligafx.dao.DAOException;
 import ligafx.dao.DAOManager;
@@ -43,13 +41,11 @@ public class CalendarioController implements Initializable {
 
     private void cargarPartidos(int jornada) {
         try {
+            vBoxPartidos.getChildren().clear();
+
             Jornada jonada = DAOManager.getJornadaDAO().cargar(jornada);
-
-            if (!vBoxPartidos.getChildren().isEmpty()) {
-                vBoxPartidos.getChildren().removeAll();
-            }
-
             int posicion = 1;
+
             for (Partido partido : jonada.getPartidos()) {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("../views/partidoLista.fxml"));

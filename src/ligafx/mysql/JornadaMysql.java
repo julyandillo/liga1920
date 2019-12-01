@@ -16,7 +16,7 @@ public class JornadaMysql implements JornadaDAO {
     private static final String CARGAR_JORNADA = "select p.id_partido, p.id_equipo_local, p.goles_local, " +
             "p.id_equipo_visitante, p.goles_visitante, disputado, fecha " +
             "from partido p " +
-            "where id_jornada=1";
+            "where id_jornada = ?";
 
     @Override
     public Jornada cargar(Integer id) throws DAOException {
@@ -27,6 +27,7 @@ public class JornadaMysql implements JornadaDAO {
 
         try {
             ps = DBConexion.getConexion().prepareStatement(CARGAR_JORNADA);
+            ps.setInt(1, id);
             rs = ps.executeQuery();
 
             while (rs.next()) {

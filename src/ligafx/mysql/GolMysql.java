@@ -11,10 +11,7 @@ import ligafx.util.DBConexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GolMysql implements GolDAO {
 
@@ -25,12 +22,12 @@ public class GolMysql implements GolDAO {
             "where g.id_partido = ?";
 
     @Override
-    public Map<TipoEquipo, List<GolDecorator>> cargarTodosPorPartido(Integer idPartido, Integer idEquipoLocal,
-                                                                     Integer idEquipoVisitante) throws DAOException {
+    public EnumMap<TipoEquipo, List<GolDecorator>> cargarTodosPorPartido(Integer idPartido, Integer idEquipoLocal,
+                                                                         Integer idEquipoVisitante) throws DAOException {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        Map<TipoEquipo, List<GolDecorator>> goles = new HashMap<>();
+        EnumMap<TipoEquipo, List<GolDecorator>> goles = new EnumMap<>(TipoEquipo.class);
         goles.put(TipoEquipo.LOCAL, new ArrayList<>());
         goles.put(TipoEquipo.VISITANTE, new ArrayList<>());
 

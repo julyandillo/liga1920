@@ -38,8 +38,8 @@ public class Partido extends Entidad {
         this.fecha = fecha;
         this.disputado = disputado;
 
-        this.goles = new HashMap<>();
-        this.tarjetas = new HashMap<>();
+        this.goles = new EnumMap<>(TipoEquipo.class);
+        this.tarjetas = new EnumMap<>(TipoEquipo.class);
     }
 
     public Equipo getEquipoLocal() {
