@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import ligafx.core.Servidor;
 import ligafx.util.ReadIni;
 import ligafx.util.Util;
 

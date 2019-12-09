@@ -40,7 +40,8 @@ public class MainController implements Initializable {
                 new BotonMenu("arbitros.fxml", "boton-arbitros", "Arbitros")));
         vboxMenu.getChildren().add(new BotonInvoker(mainBorderPane,
                 new BotonMenu("estadisticas.fxml", "boton-estadisticas", "Estadisticas")));
-
+        vboxMenu.getChildren().add(new BotonInvoker(mainBorderPane,
+                new BotonMenu("servidor.fxml", "boton-servidor", "Control del servidor")));
     }
 
     /*

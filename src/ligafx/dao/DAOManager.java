@@ -1,6 +1,5 @@
 package ligafx.dao;
 
-import ligafx.modelos.Jornada;
 import ligafx.mysql.*;
 
 public class DAOManager {

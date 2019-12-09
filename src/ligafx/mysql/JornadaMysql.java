@@ -10,6 +10,8 @@ import ligafx.util.DBConexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JornadaMysql implements JornadaDAO {
 
@@ -50,4 +52,11 @@ public class JornadaMysql implements JornadaDAO {
 
         return jornada;
     }
+
+    @Override
+    public List<Jornada> cargarTodos() throws DAOException {
+        return new ArrayList<>();
+    }
+
+
 }

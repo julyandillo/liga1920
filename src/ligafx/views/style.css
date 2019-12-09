@@ -68,6 +68,26 @@
     -fx-graphic: url('../resources/icons/plantilla16.png');
 }
 
+.boton-servidor {
+    -fx-graphic: url('../resources/icons/servidor.png');
+}
+
+.boton-iniciar-servidor {
+    -fx-graphic: url('../resources/icons/start.png');
+}
+
+.boton-detener-servidor {
+    -fx-graphic: url('../resources/icons/stop.png');
+}
+
+.estado-detenido {
+    -fx-text-fill: #e43939;
+}
+
+.estado-iniciado {
+    -fx-text-fill: #38e247;
+}
+
 .fondo-impar {
     -fx-background-color: #254150;
 }

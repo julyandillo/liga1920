@@ -3,8 +3,11 @@ package ligafx.util;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public final class ReadIni {
+
+    private static final Logger LOGGER = Logger.getLogger(ReadIni.class.getName());
 
     private static Properties config = null;
 
@@ -24,11 +27,17 @@ public final class ReadIni {
             try {
                 config.load(new FileInputStream(ReadIni.FILENAME));
             } catch (IOException e) {
-
+                LOGGER.severe("ERROR: no se puede cargar la configuracion.\n" +
+                        Util.printStackTrace(e));
             }
         }
     }
 
+    public static int getPort() {
+        ReadIni.loadConfig();
+
+        return Integer.parseInt(config.getProperty("port"));
+    }
 
     public static String getDbUser() {
         ReadIni.loadConfig();

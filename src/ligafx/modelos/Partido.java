@@ -18,6 +18,8 @@ public class Partido extends Entidad {
 
     private boolean disputado;
 
+    private Arbitro arbitro;
+
     private Map<TipoEquipo, List<GolDecorator>> goles;
 
     private Map<TipoEquipo, List<Tarjeta>> tarjetas;
@@ -88,6 +90,14 @@ public class Partido extends Entidad {
 
     public void setDisputado(boolean disputado) {
         this.disputado = disputado;
+    }
+
+    public void setArbitro(Arbitro arbitro) {
+        this.arbitro = arbitro;
+    }
+
+    public Arbitro getArbitro() {
+        return this.arbitro;
     }
 
     public void agregarTarjeta(Tarjeta tarjeta, TipoEquipo equipo) {
