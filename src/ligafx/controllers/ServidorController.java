@@ -66,7 +66,7 @@ public class ServidorController implements Initializable {
     @FXML
     private void detenerServidor() {
         try {
-            Servidor.getInstance().closeServer();
+            Servidor.closeServer();
         } catch (IOException e) {
             LOGGER.severe("ERROR: ha ocurrido un error al detener el servidor.\n" + Util.printStackTrace(e));
             Util.mostrarMensaje("Ha ocurrido un error al detener el servidor", Alert.AlertType.ERROR);

@@ -1,5 +1,7 @@
 package ligafx.core;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import ligafx.util.ReadIni;
 import ligafx.util.Util;
 
@@ -8,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 /**
@@ -40,6 +43,21 @@ public class Servidor extends Thread {
         return instancia;
     }
 
+    /**
+     * Despues de cerrar el socket, si se quisiera abrir de nuevo una conexion daria error si no
+     * se borra la instancia siempre devolveria la misma ed antes pero con el socket cerrado
+     * asi se abre un nuevo socket la proxima vez que se inicie el servidor despues de cerrarse
+     *
+     * @throws IOException exception
+     */
+    public static void closeServer() throws IOException {
+        if (instancia != null) {
+            instancia.close();
+        }
+
+        instancia = null;
+    }
+
     private Servidor(String name) throws IOException {
         super(name);
 
@@ -61,10 +79,17 @@ public class Servidor extends Thread {
 
             // mientras el servidor no se cierre el hilo permanecera en ejecucion
             while (!server.isClosed()) {
-                // recibe el json del cliente como string
-                String entrada = reader.readLine();
-
-                System.out.println(entrada);
+                /* como el socket está continuamente escuchando, si no se usa directamente el reader
+                 * como fuente para parsear en lugar de un string, lanzaria una
+                 * exception al parsear un null y cerraria el hilo pero la instancia (singleton)
+                 * seguiria creada y no se podría volver a crear (nunca sería null)
+                 * por este motivo se parsea desde un string (cuando se reciba algo)
+                 */
+                String info = reader.readLine();
+                if (info != null) {
+                    JsonObject json = JsonParser.parseString(info).getAsJsonObject();
+                    System.out.println(json.get("type"));
+                }
             }
 
             System.out.println("SERVIDOR DETENIDO");
@@ -74,7 +99,7 @@ public class Servidor extends Thread {
         }
     }
 
-    public void closeServer() throws IOException{
+    public void close() throws IOException {
         if (!server.isClosed()) {
             server.close();
         }
