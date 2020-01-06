@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import ligafx.core.Servidor;
+import ligafx.servidor.Servidor;
 import ligafx.util.Util;
 
 import java.io.IOException;
@@ -28,6 +28,32 @@ public class ServidorController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        checkServerState();
+    }
+
+    @FXML
+    private void iniciarServidor() {
+        try {
+            Servidor.startServer();
+            checkServerState();
+        } catch (IOException e) {
+            LOGGER.severe("ERROR: ha ocurrido un error al iniciar el servidor.\n" + Util.printStackTrace(e));
+            Util.mostrarMensaje("Ha ocurrido un error al iniciar el servidor", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void detenerServidor() {
+        try {
+            Servidor.closeServer();
+            checkServerState();
+        } catch (IOException e) {
+            LOGGER.severe("ERROR: ha ocurrido un error al detener el servidor.\n" + Util.printStackTrace(e));
+            Util.mostrarMensaje("Ha ocurrido un error al detener el servidor", Alert.AlertType.ERROR);
+        }
+    }
+
+    private void checkServerState() {
         try {
             Servidor servidor = Servidor.getInstance();
 
@@ -50,26 +76,6 @@ public class ServidorController implements Initializable {
         } catch (IOException e) {
             LOGGER.severe("ERROR: ha ocurrido un error en el servidor.\n" + Util.printStackTrace(e));
             Util.mostrarMensaje("Ha ocurrido un error en el servidor", Alert.AlertType.ERROR);
-        }
-    }
-
-    @FXML
-    private void iniciarServidor() {
-        try {
-            Servidor.getInstance().start();
-        } catch (IOException e) {
-            LOGGER.severe("ERROR: ha ocurrido un error al iniciar el servidor.\n" + Util.printStackTrace(e));
-            Util.mostrarMensaje("Ha ocurrido un error al iniciar el servidor", Alert.AlertType.ERROR);
-        }
-    }
-
-    @FXML
-    private void detenerServidor() {
-        try {
-            Servidor.closeServer();
-        } catch (IOException e) {
-            LOGGER.severe("ERROR: ha ocurrido un error al detener el servidor.\n" + Util.printStackTrace(e));
-            Util.mostrarMensaje("Ha ocurrido un error al detener el servidor", Alert.AlertType.ERROR);
         }
     }
 }

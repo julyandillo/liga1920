@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="fondo-panel" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ligafx.controllers.PlantillaController">
+   <children>
+      <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="14.0" prefHeight="70.0" prefWidth="765.0">
+         <children>
+            <ImageView fx:id="imageViewEscudo" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="labelEquipo" text="Label">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <Separator layoutX="14.0" layoutY="83.0" prefHeight="24.0" prefWidth="765.0" />
+      <Accordion layoutX="14.0" layoutY="107.0" prefHeight="475.0" prefWidth="400.0">
+        <panes>
+          <TitledPane animated="false" text="Porteros">
+               <content>
+                  <ScrollPane fx:id="scrollPanePorteros" prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="vBoxPorteros" prefHeight="318.0" prefWidth="398.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Defensas" />
+          <TitledPane animated="false" text="Centrocampistas" />
+            <TitledPane animated="false" text="Delanteros" />
+        </panes>
+      </Accordion>
+      <AnchorPane layoutX="430.0" layoutY="107.0" prefHeight="380.0" prefWidth="350.0" />
+   </children>
+</AnchorPane>

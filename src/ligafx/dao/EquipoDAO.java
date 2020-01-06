@@ -4,7 +4,7 @@ import ligafx.modelos.Equipo;
 
 import java.util.List;
 
-public interface EquipoDAO extends Cargable <Equipo, Integer> {
+public interface EquipoDAO extends Modificable<Equipo> {
 
     List<String> cargarNombres() throws DAOException;
 

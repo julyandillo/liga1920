@@ -10,5 +10,5 @@ public enum Posicion {
 
     Posicion(String valor) { this.valor = valor; }
 
-    String getValor() { return this.valor; }
+    public String getValor() { return this.valor; }
 }

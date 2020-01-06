@@ -23,6 +23,8 @@ public class EquipoMysql implements EquipoDAO {
 
     private static final String GET_NOMBRES = "SELECT nombre FROM equipo ORDER BY nombre";
 
+    private static final String UPDATE_1 = "update equipo set entrenador=?, presidente=? where id_equipo=?";
+
     @Override
     public Equipo cargar(Integer id) throws DAOException {
         PreparedStatement ps = null;
@@ -115,6 +117,30 @@ public class EquipoMysql implements EquipoDAO {
         }
 
         return equipos;
+    }
+
+    @Override
+    public boolean guardar(Equipo object) throws DAOException {
+        return false;
+    }
+
+    @Override
+    public boolean actualizar(Equipo equipo) throws DAOException {
+        PreparedStatement ps = null;
+
+        try {
+            ps = DBConexion.getConexion().prepareStatement(UPDATE_1);
+            ps.setString(1, equipo.getEntrenador());
+            ps.setString(2, equipo.getPresidente());
+            ps.setInt(3, equipo.getId());
+
+            return ps.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            throw new DAOException("ERROR AL ACTUALIZAR EL PRESIDENTE Y ENTRENADOR", e);
+        } finally {
+            DBConexion.closeResources(ps, null);
+        }
     }
 
     private Equipo setValores(ResultSet rs) throws SQLException, DAOException {

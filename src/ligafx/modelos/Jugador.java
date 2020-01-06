@@ -10,6 +10,8 @@ public class Jugador extends Entidad {
 
     private String apodo;
 
+    private String paisNacimiento;
+
     private String nacionalidad;
 
     private Date fechaNacimiento;
@@ -22,22 +24,27 @@ public class Jugador extends Entidad {
 
     private int altura;
 
+    private String imagen;
+
     // en lugar de definirlo como ArrayList se define con la interfaz List, cuando se instancie sera un ArrayList
     private List<Gol> goles;
 
     private List<Tarjeta> tarjetas;
 
+    // el id será el que tiene el jugador en la web resultados-futbol.com desde donde se rastrean los datos
     public Jugador(int id) {
         super(id);
 
         this.nombre = "";
         this.apodo = "";
         this.nacionalidad = "";
+        this.paisNacimiento = "";
         this.fechaNacimiento = null;
         this.dorsal = 0;
         this.posicion = null;
         this.peso = 0;
         this.altura = 0;
+        this.imagen = "";
 
         this.goles = new ArrayList<>();
         this.tarjetas = new ArrayList<>();
@@ -115,4 +122,19 @@ public class Jugador extends Entidad {
         return tarjetas;
     }
 
+    public String getPaisNacimiento() {
+        return paisNacimiento;
+    }
+
+    public void setPaisNacimiento(String paisNacimiento) {
+        this.paisNacimiento = paisNacimiento;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }

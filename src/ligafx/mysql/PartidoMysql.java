@@ -37,12 +37,14 @@ public class PartidoMysql implements PartidoDAO {
             ps = DBConexion.getConexion().prepareStatement(GET);
             rs = ps.executeQuery();
 
-            partido = new Partido(idPartido, DAOManager.getEquipoDAO().cargar(rs.getInt(1)),
-                    DAOManager.getEquipoDAO().cargar(rs.getInt(2)), rs.getInt(3),
-                    rs.getInt(4), rs.getDate(5), rs.getBoolean(6));
+            if (rs.next()) {
+                partido = new Partido(idPartido, DAOManager.getEquipoDAO().cargar(rs.getInt(1)),
+                        DAOManager.getEquipoDAO().cargar(rs.getInt(2)), rs.getInt(3),
+                        rs.getInt(4), rs.getDate(5), rs.getBoolean(6));
 
-            partido.setGoles(DAOManager.getGolDAO().cargarTodosPorPartido(idPartido, rs.getInt(1),
-                    rs.getInt(2)));
+                partido.setGoles(DAOManager.getGolDAO().cargarTodosPorPartido(idPartido, rs.getInt(1),
+                        rs.getInt(2)));
+            }
 
         } catch (SQLException ex) {
             throw new DAOException("ERROR AL CARGAR EL PARTIDO", ex);

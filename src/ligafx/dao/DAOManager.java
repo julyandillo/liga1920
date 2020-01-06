@@ -6,6 +6,8 @@ public class DAOManager {
 
     private static EquipoDAO  equipoDAO = null;
 
+    private static JugadorDAO jugadorDAO = null;
+
     private static EstadioDAO estadioDAO = null;
 
     private static PartidoDAO partidoDAO = null;
@@ -24,6 +26,14 @@ public class DAOManager {
         }
 
         return equipoDAO;
+    }
+
+    public static JugadorDAO getJugadorDAO() {
+        if (jugadorDAO == null) {
+            jugadorDAO = new JugadorMysql();
+        }
+
+        return jugadorDAO;
     }
 
     public static EstadioDAO getEstadioDAO() {

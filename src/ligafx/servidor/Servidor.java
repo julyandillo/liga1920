@@ -1,16 +1,10 @@
-package ligafx.core;
+package ligafx.servidor;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import ligafx.util.ReadIni;
 import ligafx.util.Util;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 /**
@@ -43,10 +37,18 @@ public class Servidor extends Thread {
         return instancia;
     }
 
+    public static void startServer() throws IOException {
+        if (instancia == null) {
+            instancia = new Servidor("Servidor liga 19/20");
+        }
+
+        instancia.start();
+    }
+
     /**
      * Despues de cerrar el socket, si se quisiera abrir de nuevo una conexion daria error si no
-     * se borra la instancia siempre devolveria la misma ed antes pero con el socket cerrado
-     * asi se abre un nuevo socket la proxima vez que se inicie el servidor despues de cerrarse
+     * se borra la instancia siempre devolveria la misma de antes pero con el socket cerrado,
+     * asi se puede abrir un nuevo socket la proxima vez que se inicie el servidor despues de cerrarse
      *
      * @throws IOException exception
      */
@@ -66,37 +68,30 @@ public class Servidor extends Thread {
 
     @Override
     public void run() {
-        Socket socket = null;
-        BufferedReader reader = null;
 
-        try {
+        LOGGER.info("SERVIDOR INICIADO");
 
-            System.out.println("SERVIDOR INICIADO");
+        // espera a que se realice una conexión
+        // socket = server.accept(); -> esto haría un servidor dedicado
 
-            // espera a que se realice una conexión
-            socket = server.accept();
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        // espera a que un cliente solicite una conexion y crea un nuevo hilo para tratar la petición
+        // siguiendo escuchando mas peticiones de nuevos clientes
+        while (!server.isClosed()) {
+            try {
+                HiloCliente cliente = new HiloCliente(server.accept());
 
-            // mientras el servidor no se cierre el hilo permanecera en ejecucion
-            while (!server.isClosed()) {
-                /* como el socket está continuamente escuchando, si no se usa directamente el reader
-                 * como fuente para parsear en lugar de un string, lanzaria una
-                 * exception al parsear un null y cerraria el hilo pero la instancia (singleton)
-                 * seguiria creada y no se podría volver a crear (nunca sería null)
-                 * por este motivo se parsea desde un string (cuando se reciba algo)
+                Thread hilo = new Thread(cliente);
+                hilo.start();
+            } catch (IOException e) {
+                /*
+                 * Si se usara Util.printStackTrace(e) para el log, como esto es un nuevo hilo y la clase
+                 * Util es un singleton creado en otro hilo, lanzaria una excepcion al usar ese recurso
                  */
-                String info = reader.readLine();
-                if (info != null) {
-                    JsonObject json = JsonParser.parseString(info).getAsJsonObject();
-                    System.out.println(json.get("type"));
-                }
+                LOGGER.severe(e.getMessage());
             }
-
-            System.out.println("SERVIDOR DETENIDO");
-
-        } catch (IOException ex) {
-            LOGGER.severe("ERROR: ha ocurrido un error en el servidor.\n" + Util.printStackTrace(ex));
         }
+
+        LOGGER.info("SERVIDOR DETENIDO");
     }
 
     public void close() throws IOException {

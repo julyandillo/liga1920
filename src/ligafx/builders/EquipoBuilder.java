@@ -4,6 +4,8 @@ import ligafx.modelos.Equipo;
 import ligafx.modelos.Estadio;
 import ligafx.modelos.Jugador;
 
+import java.util.List;
+
 public class EquipoBuilder {
 
     private Equipo equipo;
@@ -80,6 +82,13 @@ public class EquipoBuilder {
 
     public EquipoBuilder jugador(Jugador jugador) {
         equipo.getJugadores().add(jugador);
+
+        return this;
+    }
+
+    public EquipoBuilder plantilla(List<Jugador> plantilla) {
+        equipo.getJugadores().clear();
+        equipo.getJugadores().addAll(plantilla);
 
         return this;
     }
