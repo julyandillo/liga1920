@@ -9,7 +9,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="fondo-panel" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ligafx.controllers.PlantillaController">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="14.0" prefHeight="70.0" prefWidth="765.0">
@@ -30,18 +29,42 @@
         <panes>
           <TitledPane animated="false" text="Porteros">
                <content>
-                  <ScrollPane fx:id="scrollPanePorteros" prefHeight="200.0" prefWidth="200.0">
+                  <ScrollPane fx:id="scrollPanePorteros" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
                      <content>
-                        <VBox fx:id="vBoxPorteros" prefHeight="318.0" prefWidth="398.0" />
+                        <VBox fx:id="vBoxPorteros" prefHeight="318.0" prefWidth="390.0" />
                      </content>
                   </ScrollPane>
                </content>
           </TitledPane>
-          <TitledPane animated="false" text="Defensas" />
-          <TitledPane animated="false" text="Centrocampistas" />
-            <TitledPane animated="false" text="Delanteros" />
+          <TitledPane animated="false" text="Defensas">
+               <content>
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="vBoxDefensas" prefHeight="318.0" prefWidth="390.0" />
+                     </content>
+                  </ScrollPane>
+               </content></TitledPane>
+          <TitledPane animated="false" text="Centrocampistas">
+               <content>
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="vBoxCentrocampistas" prefHeight="318.0" prefWidth="390.0" />
+                     </content>
+                  </ScrollPane>
+               </content></TitledPane>
+            <TitledPane animated="false" text="Delanteros">
+               <content>
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="vBoxDelanteros" prefHeight="318.0" prefWidth="390.0" />
+                     </content>
+                  </ScrollPane>
+               </content></TitledPane>
         </panes>
       </Accordion>
-      <AnchorPane layoutX="430.0" layoutY="107.0" prefHeight="380.0" prefWidth="350.0" />
+      <AnchorPane fx:id="detalles" layoutX="430.0" layoutY="107.0" prefHeight="380.0" prefWidth="350.0">
+         <children>
+            <Label fx:id="labelNombreCompleto" layoutX="14.0" layoutY="14.0" text="Label" />
+         </children></AnchorPane>
    </children>
 </AnchorPane>

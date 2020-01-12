@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      onMouseClicked="#click" prefHeight="50.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ligafx.controllers.JugadorListaController">
+    <children>
+        <Label fx:id="labelDorsal" alignment="CENTER" contentDisplay="CENTER" prefWidth="40.0" text="20"
+               textAlignment="RIGHT">
+            <HBox.margin>
+                <Insets right="20.0"/>
+            </HBox.margin>
+        </Label>
+        <ImageView fx:id="imageView" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+            <HBox.margin>
+                <Insets right="20.0"/>
+            </HBox.margin>
+        </ImageView>
+        <Label fx:id="labelNombre" text="Label"/>
+    </children>
+    <cursor>
+        <Cursor fx:constant="DEFAULT"/>
+    </cursor>
+</HBox>
