@@ -3,6 +3,7 @@ package ligafx.servidor;
 import com.google.gson.JsonObject;
 import ligafx.servidor.actualizadores.Equipo;
 import ligafx.servidor.actualizadores.Jugador;
+import ligafx.servidor.actualizadores.Partido;
 
 public class JsonInterpreter {
 
@@ -20,7 +21,7 @@ public class JsonInterpreter {
                 this.actualizador = new Jugador(json);
                 break;
             case "partido":
-                // TODO actrualizador para un partido
+                this.actualizador = new Partido(json);
                 break;
             case "jornada":
                 // TODO actualizador para una jornada completa
