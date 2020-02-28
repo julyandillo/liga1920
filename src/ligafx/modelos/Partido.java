@@ -20,6 +20,8 @@ public class Partido extends Entidad {
 
     private Arbitro arbitro;
 
+    private Arbitro arbitroVar;
+
     private Map<TipoEquipo, List<GolDecorator>> goles;
 
     private Map<TipoEquipo, List<Tarjeta>> tarjetas;
@@ -98,6 +100,14 @@ public class Partido extends Entidad {
 
     public Arbitro getArbitro() {
         return this.arbitro;
+    }
+
+    public Arbitro getArbitroVar() {
+        return arbitroVar;
+    }
+
+    public void setArbitroVar(Arbitro arbitroVar) {
+        this.arbitroVar = arbitroVar;
     }
 
     public void agregarTarjeta(Tarjeta tarjeta, TipoEquipo equipo) {
