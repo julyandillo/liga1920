@@ -27,6 +27,8 @@ public class Equipo extends Entidad {
 
     private List<Jugador> jugadores;
 
+    private Estadistica estadistica;
+
     public Equipo(int id) {
         super(id);
 
@@ -42,6 +44,7 @@ public class Equipo extends Entidad {
 
         this.estadio = null;
         this.jugadores = new ArrayList<>();
+        this.estadistica = null;
     }
 
     public String getNombre() {
@@ -128,4 +131,11 @@ public class Equipo extends Entidad {
         return jugadores;
     }
 
+    public Estadistica getEstadistica() {
+        return estadistica;
+    }
+
+    public void setEstadistica(Estadistica estadistica) {
+        this.estadistica = estadistica;
+    }
 }

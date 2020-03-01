@@ -1,8 +1,6 @@
 package ligafx.dao;
 
-public interface Modificable<T> extends Cargable<T, Integer>{
-
-    boolean guardar(T object) throws DAOException;
+public interface Modificable<T> extends Cargable<T, Integer>, Guardable<T>{
 
     boolean actualizar(T object) throws DAOException;
 }

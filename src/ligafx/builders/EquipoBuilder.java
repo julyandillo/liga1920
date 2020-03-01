@@ -2,6 +2,7 @@ package ligafx.builders;
 
 import ligafx.modelos.Equipo;
 import ligafx.modelos.Estadio;
+import ligafx.modelos.Estadistica;
 import ligafx.modelos.Jugador;
 
 import java.util.List;
@@ -89,6 +90,12 @@ public class EquipoBuilder {
     public EquipoBuilder plantilla(List<Jugador> plantilla) {
         equipo.getJugadores().clear();
         equipo.getJugadores().addAll(plantilla);
+
+        return this;
+    }
+
+    public EquipoBuilder estadistica(Estadistica estadistica) {
+        equipo.setEstadistica(estadistica);
 
         return this;
     }
