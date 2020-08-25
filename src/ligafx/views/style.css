@@ -40,6 +40,19 @@
     -fx-text-fill: #92daec;
 }
 
+.boton-equipo:hover {
+    -fx-background-color: #254150;
+    -fx-border-color: #254150;
+}
+
+.boton-equipo {
+    -fx-border-color: #92daec;
+    -fx-cursor: hand;
+    -fx-background-color: #FFFDE8;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
 .boton-detalles {
     -fx-graphic: url('../resources/icons/detail.png');
 }

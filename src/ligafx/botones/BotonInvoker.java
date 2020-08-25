@@ -1,4 +1,4 @@
-package ligafx.menu;
+package ligafx.botones;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;

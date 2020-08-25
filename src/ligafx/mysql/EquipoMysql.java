@@ -11,7 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EquipoMysql implements EquipoDAO {
 
@@ -22,6 +24,8 @@ public class EquipoMysql implements EquipoDAO {
     private static final String GET_POR_NOMBRE = "SELECT * FROM equipo WHERE nombre LIKE ?";
 
     private static final String GET_NOMBRES = "SELECT nombre FROM equipo ORDER BY nombre";
+
+    private static final String GET_NOMBRES_ESCUDOS = "SELECT nombre, escudo FROM equipo ORDER BY nombre";
 
     private static final String UPDATE_1 = "update equipo set entrenador=?, presidente=? where id_equipo=?";
 
@@ -109,6 +113,28 @@ public class EquipoMysql implements EquipoDAO {
 
             while (rs.next()) {
                 equipos.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("ERROR AL CARGAR LA LISTA DE EQUIPOS", e);
+        } finally {
+            DBConexion.closeResources(ps, rs);
+        }
+
+        return equipos;
+    }
+
+    public Map<String, String> cargarNombresEscudos() throws DAOException {
+        Map<String, String> equipos = new HashMap<>();
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = DBConexion.getConexion().prepareStatement(GET_NOMBRES_ESCUDOS);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                equipos.put(rs.getString(1), rs.getString(2));
             }
         } catch (SQLException e) {
             throw new DAOException("ERROR AL CARGAR LA LISTA DE EQUIPOS", e);

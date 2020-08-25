@@ -1,20 +1,18 @@
 package ligafx.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import ligafx.botones.BotonEquipoInvoker;
 import ligafx.dao.DAOException;
 import ligafx.dao.DAOManager;
 import ligafx.modelos.Equipo;
@@ -22,7 +20,9 @@ import ligafx.util.Util;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +32,9 @@ public class EquiposController implements Initializable {
 
     @FXML
     private ListView<String> listViewEquipos;
+
+    @FXML
+    private FlowPane flowPaneEquipos;
 
     @FXML
     private Label labelNombreClub;
@@ -82,14 +85,24 @@ public class EquiposController implements Initializable {
         try {
             flowPaneDetalles.setVisible(false);
 
-            ObservableList<String> equipos = FXCollections.observableArrayList(
-                    DAOManager.getEquipoDAO().cargarNombres());
+            // TreeMap es un Map que permite tener las keys ordenadas, al crearlo a partir de un Map sus claves se
+            // ordenan de manera natural usando una implementacion de la interfaz Comparable
+            // https://stackoverflow.com/questions/571388/how-can-i-sort-the-keys-of-a-map-in-java
+            Map<String, String> equipos = new TreeMap<>(DAOManager.getEquipoDAO().cargarNombresEscudos());
 
-            listViewEquipos.setItems(equipos);
+            /*
+            Cuando al iterar sobre una Map hace falta también acceder al valor, es mas eficiente iterar con entrySet
+            que te da los dos valores, la key y el valor,
+            en lugar de solo con las keys y despues acceder al valor de la key
+            for(String equipo: equipos.keySet()) {
+                this.hboxEquipos.getChildren().add(new BotonEquipoInvoker(this, equipo, equipos.get(equipo)));
+            }*/
 
-            listViewEquipos.getSelectionModel().selectedItemProperty().addListener(
-                    ((observable, old, newValue) -> cargarDetalles(newValue))
-            );
+
+            for(Map.Entry<String, String> equipoEscudo : equipos.entrySet()) {
+                this.flowPaneEquipos.getChildren().add(new BotonEquipoInvoker(this, equipoEscudo.getKey(), equipoEscudo.getValue()));
+            }
+
 
         } catch (DAOException e) {
             Util.mostrarMensaje(e.getMensaje(), Alert.AlertType.ERROR);
@@ -97,7 +110,7 @@ public class EquiposController implements Initializable {
         }
     }
 
-    private void cargarDetalles(String nombre) {
+    public void cargarDetalles(String nombre) {
         try {
             equipo = DAOManager.getEquipoDAO().cargar(nombre);
             equipo.getJugadores().addAll(DAOManager.getJugadorDAO().cargarPlantilla(equipo.getId()));

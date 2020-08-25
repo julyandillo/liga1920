@@ -1,6 +1,7 @@
 package ligafx.modelos;
 
 import ligafx.decoradores.GolDecorator;
+import ligafx.decoradores.TarjetaDecorator;
 
 import java.util.*;
 
@@ -24,7 +25,7 @@ public class Partido extends Entidad {
 
     private Map<TipoEquipo, List<GolDecorator>> goles;
 
-    private Map<TipoEquipo, List<Tarjeta>> tarjetas;
+    private Map<TipoEquipo, List<TarjetaDecorator>> tarjetas;
 
     public Partido(int id) {
 
@@ -110,7 +111,7 @@ public class Partido extends Entidad {
         this.arbitroVar = arbitroVar;
     }
 
-    public void agregarTarjeta(Tarjeta tarjeta, TipoEquipo equipo) {
+    public void agregarTarjeta(TarjetaDecorator tarjeta, TipoEquipo equipo) {
         if (!this.tarjetas.containsKey(equipo)) {
             this.tarjetas.put(equipo, new ArrayList<>());
         }
@@ -118,11 +119,15 @@ public class Partido extends Entidad {
         this.tarjetas.get(equipo).add(tarjeta);
     }
 
-    public void setTarjetas(List<Tarjeta> tarjetas, TipoEquipo equipo) {
+    public void setTarjetas(List<TarjetaDecorator> tarjetas, TipoEquipo equipo) {
         this.tarjetas.put(equipo, tarjetas);
     }
 
-    public List<Tarjeta> getTarjetas(TipoEquipo equipo) {
+    public void setTarjetas(Map<TipoEquipo, List<TarjetaDecorator>> tarjetas) {
+        this.tarjetas = tarjetas;
+    }
+
+    public List<TarjetaDecorator> getTarjetas(TipoEquipo equipo) {
         return this.tarjetas.get(equipo);
     }
 
