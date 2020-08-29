@@ -12,13 +12,6 @@ public class Dato {
         total = 0;
     }
 
-    public Dato(int casa, int fuera) {
-        this.casa = casa;
-        this.fuera = fuera;
-
-        total = casa + fuera;
-    }
-
     public Integer getTotal() {
         return total;
     }

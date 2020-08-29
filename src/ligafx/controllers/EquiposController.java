@@ -6,11 +6,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import ligafx.botones.BotonEquipoInvoker;
 import ligafx.dao.DAOException;
@@ -29,9 +27,6 @@ import java.util.logging.Logger;
 public class EquiposController implements Initializable {
 
     private static final Logger LOGGER = Logger.getLogger(EquiposController.class.getName());
-
-    @FXML
-    private ListView<String> listViewEquipos;
 
     @FXML
     private FlowPane flowPaneEquipos;

@@ -4,7 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class Estadistica {
-    private Map<TipoParametro, Dato> parametros;
+    private final Map<TipoParametro, Dato> parametros;
     
     public Estadistica(boolean inicialilzar) {
         parametros = new EnumMap<>(TipoParametro.class);

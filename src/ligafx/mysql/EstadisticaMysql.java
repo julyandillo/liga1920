@@ -29,10 +29,10 @@ public class EstadisticaMysql implements EstadisticaDAO {
             "puntos DESC, (goles_favor-golesc_contra) DESC, goles_favor DESC, goles_contra ASC";
 
     private static final String CARGAR_ULTIMAS = "SELECT e.nombre as equipo, puntos, jugados, ganados, perdidos, " +
-            "empatados, goles_favor, goles_contra, (goles_favor - b.goles_contra) as 'golaverage' " +
+            "empatados, goles_favor, goles_contra, (goles_favor - goles_contra) as 'golaverage' " +
             "FROM estadistica es " +
             "INNER JOIN equipo e ON e.id_equipo = es.id_equipo " +
-            "WHERE es.id IN (SELECT MAX(id) FROM estadistica GROUP BY id_equipo) " +
+            "WHERE es.id_estadistica IN (SELECT MAX(id_estadistica) FROM estadistica GROUP BY id_equipo) " +
             "ORDER BY puntos desc, (goles_favor - goles_contra) desc, goles_favor desc";
 
     @Override

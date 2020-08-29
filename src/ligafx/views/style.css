@@ -108,3 +108,7 @@
 .fondo-par {
     -fx-background-color: #16242F;
 }
+
+.table-column-center {
+  -fx-alignment: CENTER;
+}
