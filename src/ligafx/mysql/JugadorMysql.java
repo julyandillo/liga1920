@@ -74,11 +74,16 @@ public class JugadorMysql implements JugadorDAO {
                 ps.setString(5, jugador.getApodo());
                 ps.setInt(6, jugador.getPeso());
                 ps.setInt(7, jugador.getAltura());
-                ps.setDate(8, new Date(jugador.getFechaNacimiento().getTime()));
                 ps.setString(9, jugador.getNacionalidad());
                 ps.setString(10, jugador.getPaisNacimiento());
                 ps.setInt(11, idEquipo);
                 ps.setString(12, jugador.getImagen());
+
+                if (jugador.getFechaNacimiento() != null) {
+                    ps.setDate(8, new Date(jugador.getFechaNacimiento().getTime()));
+                } else {
+                    ps.setDate(8, null);
+                }
 
                 ps.addBatch();
             }

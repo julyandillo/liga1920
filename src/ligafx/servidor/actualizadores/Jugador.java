@@ -42,7 +42,6 @@ public class Jugador implements Actualizable {
                 JugadorBuilder jugadorBuilder = new JugadorBuilder(jugador.get("id_resultados_futbol").getAsInt())
                         .nombre(jugador.get("nombre_completo").getAsString())
                         .apodo(jugador.get("nombre").getAsString())
-                        .fechaNacimiento(formatoFecha.parse(jugador.get("fecha_nacimiento").getAsString()))
                         .nacionalidad(jugador.get("nacionalidad").getAsString())
                         .paisNacimiento(jugador.get("pais").getAsString())
                         .dorsal(jugador.get("dorsal").getAsInt())
@@ -50,6 +49,12 @@ public class Jugador implements Actualizable {
                         .peso(jugador.get("peso").getAsInt())
                         .posicion(jugador.get("posicion").getAsString())
                         .imagen(jugador.get("imagen").getAsString());
+
+                if (!jugador.get("fecha_nacimiento").isJsonNull()) {
+                    jugadorBuilder.fechaNacimiento(formatoFecha.parse(jugador.get("fecha_nacimiento").getAsString()));
+                } else {
+                    jugadorBuilder.fechaNacimiento(null);
+                }
 
                 plantilla.add(jugadorBuilder.build());
             }
