@@ -1,13 +1,14 @@
 package ligafx.controllers;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.FXCollections;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import ligafx.dao.DAOException;
 import ligafx.dao.DAOManager;
 import ligafx.decoradores.EstadisticaDecorator;
@@ -72,8 +73,16 @@ public class ClasificacionController implements Initializable {
             tableColumnGolesContra.setCellValueFactory(new PropertyValueFactory<>("golesContra"));
             tableColumnGolaverage.setCellValueFactory(new PropertyValueFactory<>("golaverage"));
 
-            tableColumnPosicion.setCellValueFactory(column->
-                    new ReadOnlyObjectWrapper<Integer>(tableViewClasificacion.getItems().indexOf(column.getValue())+1));
+            /*tableColumnPosicion.setCellValueFactory(column->
+                    new ReadOnlyObjectWrapper<>(
+                            tableViewClasificacion.getItems().indexOf(
+                                    column.getValue())+1));*/
+            tableColumnPosicion.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String, Integer>, ObservableValue<Integer>>() {
+                @Override
+                public ObservableValue<Integer> call(TableColumn.CellDataFeatures<String, Integer> stringIntegerCellDataFeatures) {
+                    return new ReadOnlyObjectWrapper<>(tableViewClasificacion.getItems().indexOf(stringIntegerCellDataFeatures.getValue() + 1));
+                }
+            });
             tableColumnPosicion.setSortable(false);
 
             List<EstadisticaDecorator> clasificacion = DAOManager.getEstadisticaDAO().cargarUltima();
@@ -87,9 +96,6 @@ public class ClasificacionController implements Initializable {
                 }
             }
 
-            /*for (EstadisticaDecorator elemento : clasificacion) {
-                tableViewClasificacion.getItems().add(elemento);
-            }*/
             tableViewClasificacion.getItems().addAll(clasificacion);
 
         } catch (DAOException e) {

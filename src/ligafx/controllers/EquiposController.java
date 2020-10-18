@@ -95,7 +95,8 @@ public class EquiposController implements Initializable {
 
 
             for(Map.Entry<String, String> equipoEscudo : equipos.entrySet()) {
-                this.flowPaneEquipos.getChildren().add(new BotonEquipoInvoker(this, equipoEscudo.getKey(), equipoEscudo.getValue()));
+                this.flowPaneEquipos.getChildren().add(
+                        new BotonEquipoInvoker(this, equipoEscudo.getKey(), equipoEscudo.getValue()));
             }
 
 
