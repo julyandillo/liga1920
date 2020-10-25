@@ -9,9 +9,13 @@ public class EstadisticaDecorator {
 
     private final String equipo;
 
-    public EstadisticaDecorator(Estadistica estadistica, String equipo) {
+    // lugar que ocupa el equipo en la clasificacion de la jornada
+    private final Integer posicion;
+
+    public EstadisticaDecorator(Estadistica estadistica, String equipo, Integer posicion) {
         this.estadistica = estadistica;
         this.equipo = equipo;
+        this.posicion = posicion;
     }
 
     public Estadistica getEstadistica() {
@@ -39,5 +43,9 @@ public class EstadisticaDecorator {
     public Integer getGolaverage() {
         return estadistica.getParametro(TipoParametro.GOLES_FAVOR).getTotal() -
                 estadistica.getParametro(TipoParametro.GOLES_CONTRA).getTotal();
+    }
+
+    public Integer getPosicion() {
+        return this.posicion;
     }
 }

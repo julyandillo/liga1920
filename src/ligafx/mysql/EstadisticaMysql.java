@@ -144,9 +144,11 @@ public class EstadisticaMysql implements EstadisticaDAO {
         try {
             ps = DBConexion.getConexion().prepareStatement(CARGAR_ULTIMAS);
             rs = ps.executeQuery();
+            int posicion = 1;
 
             while (rs.next()) {
-                estadisticas.add(new EstadisticaDecorator(crear(rs), rs.getString("equipo")));
+                estadisticas.add(new EstadisticaDecorator(crear(rs), rs.getString("equipo"), posicion));
+                posicion++;
             }
 
         } catch (SQLException e) {

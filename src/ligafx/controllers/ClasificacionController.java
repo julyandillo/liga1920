@@ -72,17 +72,13 @@ public class ClasificacionController implements Initializable {
             tableColumnGolesFavor.setCellValueFactory(new PropertyValueFactory<>("golesFavor"));
             tableColumnGolesContra.setCellValueFactory(new PropertyValueFactory<>("golesContra"));
             tableColumnGolaverage.setCellValueFactory(new PropertyValueFactory<>("golaverage"));
+            tableColumnPosicion.setCellValueFactory(new PropertyValueFactory<>("posicion"));
 
             /*tableColumnPosicion.setCellValueFactory(column->
                     new ReadOnlyObjectWrapper<>(
                             tableViewClasificacion.getItems().indexOf(
                                     column.getValue())+1));*/
-            tableColumnPosicion.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String, Integer>, ObservableValue<Integer>>() {
-                @Override
-                public ObservableValue<Integer> call(TableColumn.CellDataFeatures<String, Integer> stringIntegerCellDataFeatures) {
-                    return new ReadOnlyObjectWrapper<>(tableViewClasificacion.getItems().indexOf(stringIntegerCellDataFeatures.getValue() + 1));
-                }
-            });
+
             tableColumnPosicion.setSortable(false);
 
             List<EstadisticaDecorator> clasificacion = DAOManager.getEstadisticaDAO().cargarUltima();
@@ -91,8 +87,10 @@ public class ClasificacionController implements Initializable {
                 clasificacion = new ArrayList<>();
                 List<String> equipos = DAOManager.getEquipoDAO().cargarNombres();
 
+                int posicion = 1;
                 for(String equipo : equipos) {
-                    clasificacion.add(new EstadisticaDecorator(new Estadistica(true), equipo));
+                    clasificacion.add(new EstadisticaDecorator(new Estadistica(true), equipo, posicion));
+                    posicion++;
                 }
             }
 
