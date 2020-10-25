@@ -18,6 +18,11 @@ public class PartidoMysql implements PartidoDAO {
     private static final String GET = "SELECT id_equipo_local, id_equipo_visitante, goles_local, goles_visitante," +
             "fecha, disputado FROM partido WHERE id_partido = ?";
 
+    private static final String BUSCAR = "select id_partido " +
+            "from partido p " +
+            "inner join equipo el on el.id_equipo = p.id_equipo_local and el.nombre = ? " +
+            "inner join equipo ev on ev.id_equipo = p.id_equipo_visitante and ev.nombre = ? ";
+
     @Override
     public boolean guardar(Partido object) {
         return false;
@@ -54,6 +59,32 @@ public class PartidoMysql implements PartidoDAO {
 
         } catch (SQLException ex) {
             throw new DAOException("ERROR AL CARGAR EL PARTIDO", ex);
+        } finally {
+            DBConexion.closeResources(ps, rs);
+        }
+
+        return partido;
+    }
+
+    @Override
+    public Partido buscar(String local, String visitante) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Partido partido = null;
+
+        try {
+            ps = DBConexion.getConexion().prepareStatement(BUSCAR);
+            ps.setString(1, local);
+            ps.setString(2, visitante);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                partido = this.cargar(rs.getInt(1));
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException("ERROR AL BUSCAR EL PARTIDO", ex);
         } finally {
             DBConexion.closeResources(ps, rs);
         }

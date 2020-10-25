@@ -18,6 +18,8 @@ public class DAOManager {
 
     private static EstadisticaDAO estadisticaDAO = null;
 
+    private static ArbitroDAO arbitroDAO = null;
+
     private DAOManager() {
         throw new IllegalStateException("Esta clase no puede ser instanciada");
     }
@@ -76,5 +78,13 @@ public class DAOManager {
         }
 
         return estadisticaDAO;
+    }
+
+    public static ArbitroDAO getArbitroDAO() {
+        if (arbitroDAO == null) {
+            arbitroDAO = new ArbitroMysql();
+        }
+
+        return arbitroDAO;
     }
 }
