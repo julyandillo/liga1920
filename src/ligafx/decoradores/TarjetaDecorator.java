@@ -4,9 +4,9 @@ import ligafx.modelos.Tarjeta;
 
 public class TarjetaDecorator {
 
-    private Tarjeta tarjeta;
+    private final Tarjeta tarjeta;
 
-    private String jugador;
+    private final String jugador;
 
     public TarjetaDecorator(Tarjeta tarjeta, String jugador) {
         this.jugador = jugador;

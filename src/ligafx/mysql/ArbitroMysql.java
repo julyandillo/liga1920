@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArbitroMysql implements ArbitroDAO {
-    private static final String CARGAR_ID = "select id, nombre from arbitro where id = ?";
+    private static final String CARGAR_ID = "select id_arbitro, nombre from arbitro where id_arbitro = ?";
 
-    private static final String CARGAR_NOMBRE = "select id, nombre from arbitro where nombre = ?";
+    private static final String CARGAR_NOMBRE = "select id_arbitro, nombre from arbitro where nombre = ?";
 
-    private static final String CARGAR_TODOS = "select id, nombre from arbitro";
+    private static final String CARGAR_TODOS = "select id_arbitro, nombre from arbitro";
 
-    private static final String GUARDAR = "INSERT INTO arbitro (id, nombre) VALUES (?, ?)";
+    private static final String GUARDAR = "INSERT INTO arbitro (nombre) VALUES (?)";
 
     @Override
     public boolean guardar(Arbitro arbitro) throws DAOException {
@@ -27,8 +27,7 @@ public class ArbitroMysql implements ArbitroDAO {
 
         try {
             ps = DBConexion.getConexion().prepareStatement(GUARDAR);
-            ps.setInt(1, arbitro.getId());
-            ps.setString(2, arbitro.getNombre());
+            ps.setString(1, arbitro.getNombre());
 
             resultado = ps.executeUpdate();
 
@@ -53,7 +52,11 @@ public class ArbitroMysql implements ArbitroDAO {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                arbitro = new Arbitro(rs.getInt("id"), rs.getString("nombre"));
+                arbitro = new Arbitro(rs.getInt("id_arbitro"), rs.getString("nombre"));
+            } else {
+                // si no existe el arbitro se guarda uno nuevo y despues se vuelve a cargar por el nombre
+                this.guardar(new Arbitro(0, nombre));
+                arbitro = this.cargar(nombre);
             }
 
         } catch (SQLException e) {
@@ -77,7 +80,7 @@ public class ArbitroMysql implements ArbitroDAO {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                arbitro = new Arbitro(rs.getInt("id"), rs.getString("nombre"));
+                arbitro = new Arbitro(rs.getInt("id_arbitro"), rs.getString("nombre"));
             }
 
         } catch (SQLException e) {

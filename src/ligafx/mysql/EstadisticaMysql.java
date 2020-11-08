@@ -163,7 +163,7 @@ public class EstadisticaMysql implements EstadisticaDAO {
     private Estadistica crear(ResultSet rs) throws SQLException {
         // asi no inicializa cada parametro a 0, no tiene sentido inicializarlos y despues setearlos con los valores
         // del resultado de la consulta
-        Estadistica estadistica = new Estadistica(false);
+        Estadistica estadistica = new Estadistica(true);
 
         estadistica.setParametro(TipoParametro.PUNTOS,
                 new DatoBuilder()

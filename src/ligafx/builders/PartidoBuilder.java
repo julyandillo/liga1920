@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class PartidoBuilder {
 
-    private Partido partido;
+    private final Partido partido;
 
     public PartidoBuilder() {
         partido = new Partido(0);
@@ -93,6 +93,12 @@ public class PartidoBuilder {
 
     public PartidoBuilder goles(Map<TipoEquipo, List<GolDecorator>> goles) {
         partido.setGoles(goles);
+
+        return this;
+    }
+
+    public PartidoBuilder jornada(int jornada) {
+        partido.setJornada(jornada);
 
         return this;
     }

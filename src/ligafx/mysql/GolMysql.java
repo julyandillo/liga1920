@@ -33,6 +33,7 @@ public class GolMysql implements GolDAO {
 
         try {
             ps = DBConexion.getConexion().prepareStatement(GOLES_POR_PARTIDO);
+            ps.setInt(1, idPartido);
             rs = ps.executeQuery();
 
             while (rs.next()) {

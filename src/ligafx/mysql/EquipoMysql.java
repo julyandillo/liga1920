@@ -181,6 +181,7 @@ public class EquipoMysql implements EquipoDAO {
                 .telefono(rs.getString("telefono"))
                 .web(rs.getString("web"))
                 .estadio(DAOManager.getEstadioDAO().cargar(rs.getInt("id_estadio")))
+                .estadistica(DAOManager.getEstadisticaDAO().cargarUltimaEquipo(rs.getInt("id_equipo")))
                 .build();
     }
 }

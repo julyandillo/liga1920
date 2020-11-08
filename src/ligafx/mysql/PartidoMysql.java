@@ -7,6 +7,7 @@ import ligafx.dao.PartidoDAO;
 import ligafx.modelos.Partido;
 import ligafx.util.DBConexion;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,12 +17,15 @@ import java.util.List;
 public class PartidoMysql implements PartidoDAO {
 
     private static final String GET = "SELECT id_equipo_local, id_equipo_visitante, goles_local, goles_visitante," +
-            "fecha, disputado FROM partido WHERE id_partido = ?";
+            "fecha, disputado, id_jornada FROM partido WHERE id_partido = ?";
 
     private static final String BUSCAR = "select id_partido " +
             "from partido p " +
             "inner join equipo el on el.id_equipo = p.id_equipo_local and el.nombre = ? " +
             "inner join equipo ev on ev.id_equipo = p.id_equipo_visitante and ev.nombre = ? ";
+
+    private static final String ACTUALIZA = "UPDATE partido SET goles_local=?, goles_visitante=?, " +
+            "fecha=?, disputado=1, id_arbitro=?, id_arbitro_var=?, asistencia=? WHERE id_partido=?";
 
     @Override
     public boolean guardar(Partido object) {
@@ -29,8 +33,29 @@ public class PartidoMysql implements PartidoDAO {
     }
 
     @Override
-    public boolean actualizar(Partido object) {
-        return false;
+    public boolean actualizar(Partido partido) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = DBConexion.getConexion().prepareStatement(ACTUALIZA);
+            ps.setInt(1, partido.getGolesLocal());
+            ps.setInt(2, partido.getGolesVisitante());
+            ps.setDate(3, new Date(partido.getFecha().getTime()));
+            ps.setInt(4, partido.getArbitro().getId());
+            ps.setInt(5, partido.getArbitroVar().getId());
+            ps.setInt(6, partido.getAsistencia());
+            ps.setInt(7, partido.getId());
+
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new DAOException("ERROR AL ACTUALIZAR EL PARTIDO", ex);
+        } finally {
+            DBConexion.closeResources(ps, rs);
+        }
+
+        return true;
     }
 
     @Override
@@ -41,6 +66,7 @@ public class PartidoMysql implements PartidoDAO {
 
         try {
             ps = DBConexion.getConexion().prepareStatement(GET);
+            ps.setInt(1, idPartido);
             rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -54,6 +80,7 @@ public class PartidoMysql implements PartidoDAO {
                         .disputado(rs.getBoolean(6))
                         .goles(DAOManager.getGolDAO().cargarTodosPorPartido(idPartido, rs.getInt(1),
                                 rs.getInt(2)))
+                        .jornada(rs.getInt(7))
                         .build();
             }
 

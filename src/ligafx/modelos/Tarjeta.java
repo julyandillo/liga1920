@@ -4,14 +4,14 @@ public class Tarjeta extends Evento {
 
     private TipoTarjeta tipo;
 
-    public Tarjeta(int minuto, TipoTarjeta tipo) {
-        super(minuto);
+    public Tarjeta(int minuto, int idJugador, TipoTarjeta tipo) {
+        super(minuto, idJugador);
 
         this.tipo = tipo;
     }
 
-    public Tarjeta(int id, int minuto, TipoTarjeta tipo) {
-        super(id, minuto);
+    public Tarjeta(int id, int minuto, int idJugador, TipoTarjeta tipo) {
+        super(id, minuto, idJugador);
 
         this.tipo = tipo;
     }

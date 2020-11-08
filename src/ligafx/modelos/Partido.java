@@ -25,12 +25,17 @@ public class Partido extends Entidad {
 
     private int asistencia;
 
+    private int jornada;
+
+    // para cuando se carga el partido para mostrar los detalles se usan los decoradores
+    // cuando se usan para el actulizador se usan los modelos (goles, tarjetas y cambios)
     private Map<TipoEquipo, List<GolDecorator>> goles;
 
     private Map<TipoEquipo, List<TarjetaDecorator>> tarjetas;
 
-    public Partido(int id) {
+    private List<Tarjeta> modeloTarjetas;
 
+    public Partido(int id) {
         super(id);
     }
 
@@ -47,6 +52,8 @@ public class Partido extends Entidad {
 
         this.goles = new EnumMap<>(TipoEquipo.class);
         this.tarjetas = new EnumMap<>(TipoEquipo.class);
+
+        this.modeloTarjetas = new ArrayList<>();
     }
 
     public Equipo getEquipoLocal() {
@@ -121,6 +128,14 @@ public class Partido extends Entidad {
         this.asistencia = asistencia;
     }
 
+    public int getJornada() {
+        return jornada;
+    }
+
+    public void setJornada(int jornada) {
+        this.jornada = jornada;
+    }
+
     public void agregarTarjeta(TarjetaDecorator tarjeta, TipoEquipo equipo) {
         if (!this.tarjetas.containsKey(equipo)) {
             this.tarjetas.put(equipo, new ArrayList<>());
@@ -143,7 +158,7 @@ public class Partido extends Entidad {
 
     public void agregarGol(GolDecorator gol, TipoEquipo equipo) {
         if (!this.goles.containsKey(equipo)) {
-            this.goles.put(equipo, new ArrayList<GolDecorator>());
+            this.goles.put(equipo, new ArrayList<>());
         }
 
         this.goles.get(equipo).add(gol);
@@ -159,5 +174,9 @@ public class Partido extends Entidad {
 
     public List<GolDecorator> getGoles(TipoEquipo equipo) {
         return this.goles.get(equipo);
+    }
+
+    public void agregarTarjeta(Tarjeta tarjeta) {
+        this.modeloTarjetas.add(tarjeta);
     }
 }
