@@ -18,7 +18,7 @@ public class EstadisticaMysql implements EstadisticaDAO {
 
     private static final String GUARDAR = "INSERT INTO estadistica (puntos, puntos_casa, puntos_fuera, jugados, " +
             "jugados_casa, jugados_fuera, ganados, ganados_casa, ganados_fuera, empatados, empatados_casa, " +
-            "emptados_fuera, perdidos, perdidos_casa, perdidos_fuera, goles_favor, goles_favor_casa, " +
+            "empatados_fuera, perdidos, perdidos_casa, perdidos_fuera, goles_favor, goles_favor_casa, " +
             "goles_favor_fuera, goles_contra, goles_contra_casa, goles_contra_fuera, id_equipo, id_jornada) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -28,12 +28,13 @@ public class EstadisticaMysql implements EstadisticaDAO {
     private static final String CARGAR_POR_JORNADA = "SELECT * FROM estadisitca WHERE id_jornada = ? ORDER BY " +
             "puntos DESC, (goles_favor-golesc_contra) DESC, goles_favor DESC, goles_contra ASC";
 
-    private static final String CARGAR_ULTIMAS = "SELECT e.nombre as equipo, puntos, jugados, ganados, perdidos, " +
-            "empatados, goles_favor, goles_contra, (goles_favor - goles_contra) as 'golaverage' " +
-            "FROM estadistica es " +
-            "INNER JOIN equipo e ON e.id_equipo = es.id_equipo " +
-            "WHERE es.id_estadistica IN (SELECT MAX(id_estadistica) FROM estadistica GROUP BY id_equipo) " +
-            "ORDER BY puntos desc, (goles_favor - goles_contra) desc, goles_favor desc";
+    private static final String CARGAR_ULTIMAS = "SELECT e.nombre as equipo, es.*, " +
+            "cast(goles_favor as SIGNED) - cast(goles_contra as SIGNED) as 'golaverage' " +
+            "FROM  equipo e " +
+            "LEFT JOIN estadistica es ON e.id_equipo = es.id_equipo " +
+            "AND es.id_estadistica IN (SELECT MAX(id_estadistica) FROM estadistica GROUP BY id_equipo) " +
+            "WHERE e.id_equipo > 0 " +
+            "ORDER BY puntos desc, cast(goles_favor as SIGNED) - cast(goles_contra as SIGNED) desc, goles_favor desc";
 
     @Override
     public boolean guardar(Estadistica estadistica, int equipo, int jornada) throws DAOException {
@@ -127,7 +128,7 @@ public class EstadisticaMysql implements EstadisticaDAO {
             }
 
         } catch (SQLException e) {
-            throw new DAOException("ERROR AL CARGAR LAS ESTADISTICAS DE LA JORNADA", e);
+            throw new DAOException("ERROR AL CARGAR LAS ESTADISTICAS DE LA JORNADA", CARGAR_POR_JORNADA, e);
         } finally {
             DBConexion.closeResources(ps, rs);
         }
@@ -152,7 +153,7 @@ public class EstadisticaMysql implements EstadisticaDAO {
             }
 
         } catch (SQLException e) {
-            throw new DAOException("ERROR AL CARGAR LAS ULTIMAS ESTADISTICAS", e);
+            throw new DAOException("ERROR AL CARGAR LAS ULTIMAS ESTADISTICAS", CARGAR_ULTIMAS, e);
         } finally {
             DBConexion.closeResources(ps, rs);
         }

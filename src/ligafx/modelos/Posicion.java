@@ -4,9 +4,10 @@ public enum Posicion {
     PORTERO("POR"),
     DEFENSA("DEF"),
     CENTROCAMPISTA("MED"),
-    DELANTERO("DEL");
+    DELANTERO("DEL"),
+    DESCONOCIDA("SP");
 
-    private String valor;
+    private final String valor;
 
     Posicion(String valor) { this.valor = valor; }
 

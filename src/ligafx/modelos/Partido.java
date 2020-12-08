@@ -33,27 +33,21 @@ public class Partido extends Entidad {
 
     private Map<TipoEquipo, List<TarjetaDecorator>> tarjetas;
 
-    private List<Tarjeta> modeloTarjetas;
+    private final List<Tarjeta> modeloTarjetas;
+
+    private final List<Gol> modeloGoles;
+
+    private final List<Cambio> modeloCambios;
 
     public Partido(int id) {
         super(id);
-    }
-
-    public Partido(int id, Equipo equipoLocal, Equipo equipoVisitante, int golesLocal, int golesVisitante, Date fecha,
-                   boolean disputado) {
-        super(id);
-
-        this.equipoLocal = equipoLocal;
-        this.equipoVisitante = equipoVisitante;
-        this.golesLocal = golesLocal;
-        this.golesVisitante = golesVisitante;
-        this.fecha = fecha;
-        this.disputado = disputado;
 
         this.goles = new EnumMap<>(TipoEquipo.class);
         this.tarjetas = new EnumMap<>(TipoEquipo.class);
 
         this.modeloTarjetas = new ArrayList<>();
+        this.modeloGoles = new ArrayList<>();
+        this.modeloCambios = new ArrayList<>();
     }
 
     public Equipo getEquipoLocal() {
@@ -178,5 +172,24 @@ public class Partido extends Entidad {
 
     public void agregarTarjeta(Tarjeta tarjeta) {
         this.modeloTarjetas.add(tarjeta);
+    }
+
+    public List<Tarjeta> getModeloTarjetas() {
+        return this.modeloTarjetas;
+    }
+
+    public void agregarGol(Gol gol) {
+        this.modeloGoles.add(gol);
+    }
+    public List<Gol> getModeloGoles() {
+        return this.modeloGoles;
+    }
+
+    public void agregarCambio(Cambio cambio) {
+        this.modeloCambios.add(cambio);
+    }
+
+    public List<Cambio> getModeloCambios() {
+        return this.modeloCambios;
     }
 }

@@ -67,8 +67,8 @@ public class ClasificacionController implements Initializable {
             tableColumnPuntos.setCellValueFactory(new PropertyValueFactory<>("puntos"));
             tableColumnJugados.setCellValueFactory(new PropertyValueFactory<>("jugados"));
             tableColumnGanados.setCellValueFactory(new PropertyValueFactory<>("ganados"));
-            tableColumnPerdidos.setCellValueFactory(new PropertyValueFactory<>("empatados"));
-            tableColumnEmpatados.setCellValueFactory(new PropertyValueFactory<>("perdidos"));
+            tableColumnPerdidos.setCellValueFactory(new PropertyValueFactory<>("perdidos"));
+            tableColumnEmpatados.setCellValueFactory(new PropertyValueFactory<>("empatados"));
             tableColumnGolesFavor.setCellValueFactory(new PropertyValueFactory<>("golesFavor"));
             tableColumnGolesContra.setCellValueFactory(new PropertyValueFactory<>("golesContra"));
             tableColumnGolaverage.setCellValueFactory(new PropertyValueFactory<>("golaverage"));

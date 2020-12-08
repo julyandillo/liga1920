@@ -30,10 +30,12 @@ public class Dato {
 
     public void setCasa(Integer casa) {
         this.casa = casa;
+        total = this.casa + this.fuera;
     }
 
     public void setFuera(Integer fuera) {
         this.fuera = fuera;
+        total = this.casa + this.fuera;
     }
 
     public void incrementar(int valor, TipoEquipo equipo) {

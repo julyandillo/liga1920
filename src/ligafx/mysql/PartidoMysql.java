@@ -7,10 +7,7 @@ import ligafx.dao.PartidoDAO;
 import ligafx.modelos.Partido;
 import ligafx.util.DBConexion;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +38,7 @@ public class PartidoMysql implements PartidoDAO {
             ps = DBConexion.getConexion().prepareStatement(ACTUALIZA);
             ps.setInt(1, partido.getGolesLocal());
             ps.setInt(2, partido.getGolesVisitante());
-            ps.setDate(3, new Date(partido.getFecha().getTime()));
+            ps.setTimestamp(3, new Timestamp(partido.getFecha().getTime()));
             ps.setInt(4, partido.getArbitro().getId());
             ps.setInt(5, partido.getArbitroVar().getId());
             ps.setInt(6, partido.getAsistencia());

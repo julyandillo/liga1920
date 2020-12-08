@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class JugadorMysql implements JugadorDAO {
@@ -22,6 +23,8 @@ public class JugadorMysql implements JugadorDAO {
     private static final String CARGAR = "select * from jugador where id_jugador = ?";
 
     private static final String CARGAR_TODOS = "select * from jugador order by nombre";
+
+    private static final String CARGAR_TODOS_IDS = "select id_jugador from jugador order by nombre";
 
     private static final String CARGAR_PLANTILLA = "select * from jugador where id_equipo = ?";
 
@@ -43,7 +46,13 @@ public class JugadorMysql implements JugadorDAO {
             ps.setString(5, jugador.getApodo());
             ps.setInt(6, jugador.getPeso());
             ps.setInt(7, jugador.getAltura());
-            ps.setDate(8, new Date(jugador.getFechaNacimiento().getTime()));
+
+            if (jugador.getFechaNacimiento() != null) {
+                ps.setDate(8, new Date(jugador.getFechaNacimiento().getTime()));
+            } else {
+                ps.setDate(8, null);
+            }
+
             ps.setString(9, jugador.getNacionalidad());
             ps.setString(10, jugador.getPaisNacimiento());
             ps.setInt(11, idEquipo);
@@ -197,5 +206,29 @@ public class JugadorMysql implements JugadorDAO {
                 .altura(rs.getInt("altura"))
                 .imagen(rs.getString("imagen"))
                 .build();
+    }
+
+    @Override
+    public HashSet<Integer> cargarIds() throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        HashSet<Integer> idJugadores = new HashSet<>();
+
+        try {
+            ps = DBConexion.getConexion().prepareStatement(CARGAR_TODOS_IDS);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                idJugadores.add(rs.getInt("id_jugador"));
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException("ERROR AL CARGAR LOS IDS DE LOS JUGADORES", CARGAR_TODOS_IDS, e);
+        } finally {
+            DBConexion.closeResources(ps, rs);
+        }
+
+
+        return idJugadores;
     }
 }

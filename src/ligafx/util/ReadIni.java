@@ -1,5 +1,6 @@
 package ligafx.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -24,8 +25,8 @@ public final class ReadIni {
     private static void loadConfig() {
         if (config == null) {
             config = new Properties();
-            try {
-                config.load(new FileInputStream(ReadIni.FILENAME));
+            try (FileInputStream file = new FileInputStream(ReadIni.FILENAME)) {
+                config.load(file);
             } catch (IOException e) {
                 LOGGER.severe("ERROR: no se puede cargar la configuracion.\n" +
                         Util.printStackTrace(e));

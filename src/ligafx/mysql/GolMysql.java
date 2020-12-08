@@ -21,8 +21,11 @@ public class GolMysql implements GolDAO {
             "inner join jugador j on j.id_jugador=g.id_jugador " +
             "where g.id_partido = ?";
 
+    private static final String GUARDAR = "INSERT INTO gol (minuto, penalti, propia_meta, id_jugador, id_partido) " +
+            "VALUES (?, ?, ?, ?, ?)";
+
     @Override
-    public EnumMap<TipoEquipo, List<GolDecorator>> cargarTodosPorPartido(Integer idPartido, Integer idEquipoLocal,
+    public Map<TipoEquipo, List<GolDecorator>> cargarTodosPorPartido(Integer idPartido, Integer idEquipoLocal,
                                                                          Integer idEquipoVisitante) throws DAOException {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -64,5 +67,41 @@ public class GolMysql implements GolDAO {
     @Override
     public List<Gol> cargarTodos() throws DAOException {
         return new ArrayList<>();
+    }
+
+    @Override
+    public int guardarGoles(List<Gol> goles, int idPartido) throws DAOException{
+        int guardados = 0;
+
+        for (Gol gol : goles) {
+            if (guardar(gol, idPartido))
+                guardados++;
+        }
+
+        return guardados;
+    }
+
+
+    public boolean guardar(Gol gol, int idPartido) throws DAOException {
+        PreparedStatement ps = null;
+        int filasInsertadas = 0;
+
+        try {
+            ps = DBConexion.getConexion().prepareStatement(GUARDAR);
+            ps.setInt(1, gol.getMinuto());
+            ps.setBoolean(2, gol.isPenalti());
+            ps.setBoolean(3, gol.isPropiaMeta());
+            ps.setInt(4, gol.getIdJugador());
+            ps.setInt(5, idPartido);
+
+            filasInsertadas = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DAOException("ERROR AL GUARDAR UN GOL", GUARDAR, e);
+        } finally {
+            DBConexion.closeResources(ps, null);
+        }
+
+        return filasInsertadas == 1;
     }
 }

@@ -8,10 +8,12 @@ public class Cambio extends Entidad {
 
     private int minuto;
 
-    public Cambio(int minuto, int idJugadorSale, int idJugadorEntra) {
-        this.minuto = minuto;
-        this.idJugadorEntra = idJugadorEntra;
-        this.idJugadorSale = idJugadorSale;
+    public Cambio() {
+        super(0);
+
+        minuto = 0;
+        idJugadorEntra = 0;
+        idJugadorSale = 0;
     }
 
     public int getIdJugadorSale() {

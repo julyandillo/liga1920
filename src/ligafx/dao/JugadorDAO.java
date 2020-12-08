@@ -2,6 +2,7 @@ package ligafx.dao;
 
 import ligafx.modelos.Jugador;
 
+import java.util.HashSet;
 import java.util.List;
 
 public interface JugadorDAO extends Modificable<Jugador> {
@@ -11,4 +12,6 @@ public interface JugadorDAO extends Modificable<Jugador> {
     boolean guardar(Jugador jugador, int idEquipo) throws DAOException;
 
     boolean guardar(List<Jugador> plantilla, int idEquipo) throws DAOException;
+
+    HashSet<Integer> cargarIds() throws DAOException;
 }

@@ -17,15 +17,15 @@ import java.util.Map;
 
 public class EquipoMysql implements EquipoDAO {
 
-    private static final String GET_TODOS = "SELECT * FROM equipo";
+    private static final String GET_TODOS = "SELECT * FROM equipo WHERE id_equipo > 0";
 
     private static final String GET = "SELECT * FROM equipo WHERE id_equipo = ?";
 
     private static final String GET_POR_NOMBRE = "SELECT * FROM equipo WHERE nombre LIKE ?";
 
-    private static final String GET_NOMBRES = "SELECT nombre FROM equipo ORDER BY nombre";
+    private static final String GET_NOMBRES = "SELECT nombre FROM equipo WHERE id_equipo > 0 ORDER BY nombre";
 
-    private static final String GET_NOMBRES_ESCUDOS = "SELECT nombre, escudo FROM equipo ORDER BY nombre";
+    private static final String GET_NOMBRES_ESCUDOS = "SELECT nombre, escudo FROM equipo WHERE id_equipo > 0 ORDER BY nombre";
 
     private static final String UPDATE_1 = "update equipo set entrenador=?, presidente=? where id_equipo=?";
 

@@ -33,7 +33,7 @@ public class Util {
     }
 
     public static Alert mostrarMensaje(String mensaje, Alert.AlertType tipo) {
-        alert.setTitle("La Liga 2019/2020");
+        alert.setTitle("La Liga 2020/2021");
         alert.setAlertType(tipo);
         alert.setContentText(mensaje);
 

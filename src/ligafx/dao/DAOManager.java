@@ -20,6 +20,10 @@ public class DAOManager {
 
     private static ArbitroDAO arbitroDAO = null;
 
+    private static TarjetaDAO tarjetaDAO = null;
+
+    private static CambioDAO cambioDAO = null;
+
     private DAOManager() {
         throw new IllegalStateException("Esta clase no puede ser instanciada");
     }
@@ -86,5 +90,21 @@ public class DAOManager {
         }
 
         return arbitroDAO;
+    }
+
+    public static TarjetaDAO getTarjetaDAO() {
+        if (tarjetaDAO == null) {
+            tarjetaDAO = new TarjetaMysql();
+        }
+
+        return tarjetaDAO;
+    }
+
+    public static CambioDAO getCambioDAO() {
+        if (cambioDAO == null) {
+            cambioDAO = new CambioMysql();
+        }
+
+        return cambioDAO;
     }
 }

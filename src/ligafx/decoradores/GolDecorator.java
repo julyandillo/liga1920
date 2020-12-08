@@ -4,25 +4,28 @@ import ligafx.modelos.Gol;
 
 public class GolDecorator {
 
-    private Gol gol;
+    private final Gol gol;
 
-    private String info;
+    private final String jugador;
 
-    public GolDecorator(Gol gol, String info) {
+    public GolDecorator(Gol gol, String jugador) {
         this.gol = gol;
-        this.info = info;
+        this.jugador = jugador;
     }
 
     public Gol getGol() {
         return this.gol;
     }
 
-    public String detalle(boolean prefijo) {
-        if (prefijo) {
-            return this.gol.detalle() + " " + this.info;
-        }
-        else {
-            return this.info + " " + this.gol.detalle();
-        }
+    public String infoGolConJugadorDespues() {
+        return this.detalle() + " " + this.jugador;
+    }
+
+    public String infoGolConJugadorAntes() {
+        return this.jugador + " " + this.detalle();
+    }
+
+    public String detalle() {
+        return this.gol.getMinuto() + (this.gol.isPenalti() ? " (p)" : "") + (this.gol.isPropiaMeta() ? " (pp)" : "");
     }
 }

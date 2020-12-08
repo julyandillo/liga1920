@@ -88,6 +88,12 @@ public class JugadorBuilder {
         return this;
     }
 
+    public JugadorBuilder posicion(Posicion posicion) {
+        this.jugador.setPosicion(posicion);
+
+        return this;
+    }
+
     public JugadorBuilder altura(int altura) {
         this.jugador.setAltura(altura);
 
