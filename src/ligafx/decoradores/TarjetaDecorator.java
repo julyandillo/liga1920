@@ -17,11 +17,15 @@ public class TarjetaDecorator {
         return tarjeta;
     }
 
-    public String detalle(boolean prefijo) {
-        if (prefijo) {
-            return jugador + " " + tarjeta.getMinuto() + "'";
-        } else {
-            return tarjeta.getMinuto() + "'" + " " + jugador;
-        }
+    public String getInfoTarjetaConJugadorAntes() {
+        return jugador + " " + detalle();
+    }
+
+    public String getInfoTarjetaConJugadorDespues() {
+        return detalle() + " " + jugador;
+    }
+
+    private String detalle() {
+        return tarjeta.getMinuto() + "'";
     }
 }

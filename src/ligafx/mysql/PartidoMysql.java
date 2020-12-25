@@ -73,7 +73,7 @@ public class PartidoMysql implements PartidoDAO {
                         .visitante(DAOManager.getEquipoDAO().cargar(rs.getInt(2)))
                         .golesLocal(rs.getInt(3))
                         .golesVisitante(rs.getInt(4))
-                        .fecha(rs.getDate(5))
+                        .fecha(rs.getTimestamp(5))
                         .disputado(rs.getBoolean(6))
                         .goles(DAOManager.getGolDAO().cargarTodosPorPartido(idPartido, rs.getInt(1),
                                 rs.getInt(2)))

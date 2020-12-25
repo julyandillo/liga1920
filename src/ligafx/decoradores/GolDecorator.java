@@ -25,7 +25,8 @@ public class GolDecorator {
         return this.jugador + " " + this.detalle();
     }
 
-    public String detalle() {
-        return this.gol.getMinuto() + (this.gol.isPenalti() ? " (p)" : "") + (this.gol.isPropiaMeta() ? " (pp)" : "");
+    private String detalle() {
+        return this.gol.getMinuto() + "' " + (this.gol.isPenalti() ? "(p)" : "") + (
+                this.gol.isPropiaMeta() ? " (pp)" : "");
     }
 }

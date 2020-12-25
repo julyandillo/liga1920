@@ -19,7 +19,8 @@ public class GolMysql implements GolDAO {
             "j.id_equipo " +
             "from gol g " +
             "inner join jugador j on j.id_jugador=g.id_jugador " +
-            "where g.id_partido = ?";
+            "where g.id_partido = ? " +
+            "order by g.id_gol";
 
     private static final String GUARDAR = "INSERT INTO gol (minuto, penalti, propia_meta, id_jugador, id_partido) " +
             "VALUES (?, ?, ?, ?, ?)";

@@ -1,5 +1,6 @@
 package ligafx.mysql;
 
+import ligafx.builders.PartidoBuilder;
 import ligafx.dao.DAOException;
 import ligafx.dao.DAOManager;
 import ligafx.dao.JornadaDAO;
@@ -16,8 +17,10 @@ import java.util.List;
 public class JornadaMysql implements JornadaDAO {
 
     private static final String CARGAR_JORNADA = "select p.id_partido, p.id_equipo_local, p.goles_local, " +
-            "p.id_equipo_visitante, p.goles_visitante, disputado, fecha " +
+            "p.id_equipo_visitante, p.goles_visitante, disputado, fecha, a.id_arbitro as arbitro, a2.id_arbitro as var " +
             "from partido p " +
+            "left join arbitro a on p.id_arbitro = a.id_arbitro " +
+            "left join arbitro a2 on p.id_arbitro_var = a2.id_arbitro " +
             "where id_jornada = ?";
 
     @Override
@@ -33,15 +36,19 @@ public class JornadaMysql implements JornadaDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Partido partido = new Partido(rs.getInt(1));
-                partido.setDisputado(rs.getBoolean(6));
-                partido.setEquipoLocal(DAOManager.getEquipoDAO().cargar(rs.getInt(2)));
-                partido.setEquipoVisitante(DAOManager.getEquipoDAO().cargar(rs.getInt(4)));
-                partido.setFecha(rs.getTimestamp(7));
-                partido.setGolesLocal(rs.getInt(3));
-                partido.setGolesVisitante(rs.getInt(5));
+                PartidoBuilder partidoBuilder = new PartidoBuilder()
+                        .id(rs.getInt(1))
+                        .disputado(rs.getBoolean(6))
+                        .local(DAOManager.getEquipoDAO().cargar(rs.getInt(2)))
+                        .visitante(DAOManager.getEquipoDAO().cargar(rs.getInt(4)))
+                        .golesLocal(rs.getInt(3))
+                        .golesVisitante(rs.getInt(5))
+                        .fecha(rs.getTimestamp(7))
+                        .arbitro(DAOManager.getArbitroDAO().cargar(rs.getInt("arbitro")))
+                        .arbitroVar(DAOManager.getArbitroDAO().cargar(rs.getInt("var")))
+                        .jornada(id);
 
-                jornada.getPartidos().add(partido);
+                jornada.getPartidos().add(partidoBuilder.build());
             }
 
         } catch (SQLException e) {

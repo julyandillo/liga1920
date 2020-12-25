@@ -43,7 +43,7 @@
                </HBox.margin></Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="buttonDetalles" mnemonicParsing="false">
+                  <Button fx:id="buttonDetalles" mnemonicParsing="false" onAction="#cargarPartido">
                      <styleClass>
                         <String fx:value="boton" />
                         <String fx:value="boton-detalles" />
