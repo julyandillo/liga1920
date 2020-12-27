@@ -100,7 +100,6 @@ public class CambioMysql implements CambioDAO {
                             rs.getString("entra"), rs.getString("sale")));
                 }
             }
-            System.out.println("hola");
 
         } catch (SQLException e) {
             throw new DAOException("ERROR AL CARGAR LOS CAMBIOS DEL PARTIDO " + idPartido, e);

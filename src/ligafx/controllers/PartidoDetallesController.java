@@ -194,10 +194,11 @@ public class PartidoDetallesController implements Initializable {
 
     private HBox detalleCambio(int minuto, String entra, String sale) {
         HBox hbox = new HBox();
+        hbox.getChildren().add(new Label(minuto + "' "));
+        hbox.getChildren().add(creaIcono("/ligafx/resources/icons/entra.png"));
         hbox.getChildren().add(new Label(entra));
-        hbox.getChildren().add(creaIcono("/ligafx/resources/icons/cambio.png"));
+        hbox.getChildren().add(creaIcono("/ligafx/resources/icons/sale.png"));
         hbox.getChildren().add(new Label(sale));
-        hbox.getChildren().add(new Label(" " + minuto + "'"));
 
         return hbox;
     }
