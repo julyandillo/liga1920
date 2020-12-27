@@ -137,4 +137,16 @@ public class Jugador extends Entidad {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
+
+    public int getNumeroGolesDePenalti() {
+        int ngoles = 0;
+
+        for (Gol gol : this.goles) {
+            if (gol.isPenalti()) {
+                ngoles++;
+            }
+        }
+
+        return ngoles;
+    }
 }

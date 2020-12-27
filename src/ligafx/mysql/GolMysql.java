@@ -25,6 +25,9 @@ public class GolMysql implements GolDAO {
     private static final String GUARDAR = "INSERT INTO gol (minuto, penalti, propia_meta, id_jugador, id_partido) " +
             "VALUES (?, ?, ?, ?, ?)";
 
+    private static final String GOLES_POR_JUGADOR = "select minuto, id_partido, penalti, propia_meta from gol " +
+            "where id_jugador = ?";
+
     @Override
     public Map<TipoEquipo, List<GolDecorator>> cargarTodosPorPartido(Integer idPartido, Integer idEquipoLocal,
                                                                          Integer idEquipoVisitante) throws DAOException {
@@ -104,5 +107,36 @@ public class GolMysql implements GolDAO {
         }
 
         return filasInsertadas == 1;
+    }
+
+    @Override
+    public List<Gol> cargarTodosPorJugador(int idJugador) throws DAOException {
+        List<Gol> goles = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = DBConexion.getConexion().prepareStatement(GOLES_POR_JUGADOR);
+            ps.setInt(1, idJugador);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Gol gol = new GolBuilder()
+                        .minuto(rs.getInt("minuto"))
+                        .penalti(rs.getBoolean("penalti"))
+                        .propiaMeta(rs.getBoolean("propia_meta"))
+                        .idJugador(idJugador)
+                        .build();
+
+                goles.add(gol);
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException("ERROR AL CARGAR LOS GOLES DEL JUGADOR " + idJugador, GOLES_POR_JUGADOR, e);
+        } finally {
+            DBConexion.closeResources(ps, rs);
+        }
+
+        return goles;
     }
 }

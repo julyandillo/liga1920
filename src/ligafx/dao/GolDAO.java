@@ -12,4 +12,6 @@ public interface GolDAO extends Cargable<Gol, Integer> {
                                                                      Integer idEquipoVisitante) throws DAOException;
 
     int guardarGoles(List<Gol> goles, int idPartido) throws DAOException;
+
+    List<Gol> cargarTodosPorJugador(int idJugador) throws DAOException;
 }

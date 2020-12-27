@@ -11,6 +11,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import ligafx.dao.DAOException;
+import ligafx.dao.DAOManager;
 import ligafx.modelos.Equipo;
 import ligafx.modelos.Jugador;
 import ligafx.modelos.Posicion;
@@ -48,6 +50,12 @@ public class PlantillaController implements Initializable {
 
     @FXML
     private Label labelNombreCompleto;
+
+    @FXML
+    private Label labelGoles;
+
+    @FXML
+    private Label labelTarjetas;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -103,7 +111,21 @@ public class PlantillaController implements Initializable {
     }
 
     public void cargarDetallesJugador(Jugador jugador) {
-        detalles.setVisible(true);
         labelNombreCompleto.setText(jugador.getNombre());
+        try {
+            jugador.getGoles().clear();
+            jugador.getGoles().addAll(DAOManager.getGolDAO().cargarTodosPorJugador(jugador.getId()));
+
+            labelGoles.setText("Goles: " + jugador.getGoles().size());
+
+            jugador.getTarjetas().clear();
+            jugador.getTarjetas().addAll(DAOManager.getTarjetaDAO().cargarTodasPorJugador(jugador.getId()));
+            labelTarjetas.setText("Tarjetas: " + jugador.getTarjetas().size());
+
+        } catch (DAOException e) {
+            Util.mostrarMensaje(e.getMensaje(), Alert.AlertType.ERROR);
+        }
+
+        detalles.setVisible(true);
     }
 }

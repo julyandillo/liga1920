@@ -26,6 +26,8 @@ public class TarjetaMysql implements TarjetaDAO {
             "inner join partido p on p.id_partido = t.id_partido " +
             "where t.id_partido = ?";
 
+    private static final String CARGAR_POR_JUGADOR = "select minuto, tipo, id_partido FROM tarjeta where id_jugador=?";
+
     @Override
     public Tarjeta cargar(Integer id) throws DAOException {
         return null;
@@ -103,5 +105,32 @@ public class TarjetaMysql implements TarjetaDAO {
         }
 
         return filasInsertadas == 1;
+    }
+
+    @Override
+    public List<Tarjeta> cargarTodasPorJugador(int idJugador) throws DAOException {
+        List<Tarjeta> tarjetas = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = DBConexion.getConexion().prepareStatement(CARGAR_POR_JUGADOR);
+            ps.setInt(1, idJugador);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                tarjetas.add(new TarjetaBuilder().jugador(idJugador).minuto(rs.getInt("minuto"))
+                        .tipo(rs.getInt("tipo") == 1 ? TipoTarjeta.AMARILLA : TipoTarjeta.ROJA)
+                    .build()
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException("ERROR AL CARGAR LAS TARJETAS DEL JUGADOR " + idJugador, CARGAR_POR_JUGADOR, e);
+        } finally {
+            DBConexion.closeResources(ps, rs);
+        }
+
+        return tarjetas;
     }
 }

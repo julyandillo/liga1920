@@ -12,4 +12,6 @@ public interface TarjetaDAO extends Cargable<Tarjeta, Integer>{
     int guardarTarjetas(List<Tarjeta> tarjetas, int idPartido) throws DAOException;
 
     Map<TipoEquipo, List<TarjetaDecorator>> cargarTodasPorPartido(int idPartido) throws DAOException;
+
+    List<Tarjeta> cargarTodasPorJugador(int idJugador) throws DAOException;
 }
