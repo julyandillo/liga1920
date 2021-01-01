@@ -116,7 +116,8 @@ public class PlantillaController implements Initializable {
             jugador.getGoles().clear();
             jugador.getGoles().addAll(DAOManager.getGolDAO().cargarTodosPorJugador(jugador.getId()));
 
-            labelGoles.setText("Goles: " + jugador.getGoles().size());
+            labelGoles.setText("Goles: " + jugador.getGoles().size() + " (" + jugador.getNumeroGolesDePenalti()
+                    + " penaltis)");
 
             jugador.getTarjetas().clear();
             jugador.getTarjetas().addAll(DAOManager.getTarjetaDAO().cargarTodasPorJugador(jugador.getId()));
