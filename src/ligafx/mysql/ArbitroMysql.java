@@ -1,5 +1,6 @@
 package ligafx.mysql;
 
+import ligafx.builders.ArbitroBuilder;
 import ligafx.dao.ArbitroDAO;
 import ligafx.dao.DAOException;
 import ligafx.modelos.Arbitro;
@@ -12,9 +13,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArbitroMysql implements ArbitroDAO {
-    private static final String CARGAR_ID = "select id_arbitro, nombre from arbitro where id_arbitro = ?";
+    private static final String CARGAR_ID = "select id_arbitro, nombre, " +
+            "(select count(*) from partido where id_arbitro=a.id_arbitro) as partidos," +
+            "(select count(*) from partido where id_arbitro_var=a.id_arbitro) as partidosVAR," +
+            "(select count(*) from tarjeta " +
+            "where tipo = 1 and id_partido in (select id_partido from partido where id_arbitro=a.id_arbitro)) as amarillas," +
+            "(select count(*) from tarjeta " +
+            "where tipo = 2 and id_partido in (select id_partido from partido where id_arbitro=a.id_arbitro)) as rojas," +
+            "(select count(*) from gol " +
+            "where penalti = 1 and id_partido in (select id_partido from partido where id_arbitro=a.id_arbitro)) as penaltis " +
+            "from arbitro a " +
+            "where a.id_arbitro = ?";
 
-    private static final String CARGAR_NOMBRE = "select id_arbitro, nombre from arbitro where nombre = ?";
+    private static final String CARGAR_NOMBRE = "select id_arbitro, nombre," +
+            "(select count(*) from partido where id_arbitro=a.id_arbitro) as partidos," +
+            "(select count(*) from partido where id_arbitro_var=a.id_arbitro) as partidosVAR," +
+            "(select count(*) from tarjeta " +
+            "where tipo = 1 and id_partido in (select id_partido from partido where id_arbitro=a.id_arbitro)) as amarillas," +
+            "(select count(*) from tarjeta " +
+            "where tipo = 2 and id_partido in (select id_partido from partido where id_arbitro=a.id_arbitro)) as rojas," +
+            "(select count(*) from gol " +
+            "where penalti = 1 and id_partido in (select id_partido from partido where id_arbitro=a.id_arbitro)) as penaltis " +
+            "from arbitro a " +
+            "where a.nombre = ?";
+
+    private static final String CARGAR_NOMBRES = "select nombre from arbitro order by nombre";
 
     private static final String CARGAR_TODOS = "select id_arbitro, nombre from arbitro";
 
@@ -52,7 +75,7 @@ public class ArbitroMysql implements ArbitroDAO {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                arbitro = new Arbitro(rs.getInt("id_arbitro"), rs.getString("nombre"));
+                arbitro = cargarArbitro(rs);
             } else {
                 // si no existe el arbitro se guarda uno nuevo y despues se vuelve a cargar por el nombre
                 this.guardar(new Arbitro(0, nombre));
@@ -68,6 +91,19 @@ public class ArbitroMysql implements ArbitroDAO {
         return arbitro;
     }
 
+    private Arbitro cargarArbitro(ResultSet rs) throws SQLException {
+        ArbitroBuilder arbitroBuilder = new ArbitroBuilder()
+                .id(rs.getInt("id_arbitro"))
+                .nombre(rs.getString("nombre"))
+                .partidos(rs.getInt("partidos"))
+                .partidosVAR(rs.getInt("partidosVAR"))
+                .amarillas(rs.getInt("amarillas"))
+                .rojas(rs.getInt("rojas"))
+                .penaltis(rs.getInt("penaltis"));
+
+        return arbitroBuilder.build();
+    }
+
     @Override
     public Arbitro cargar(Integer id) throws DAOException {
         PreparedStatement ps = null;
@@ -80,7 +116,7 @@ public class ArbitroMysql implements ArbitroDAO {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                arbitro = new Arbitro(rs.getInt("id_arbitro"), rs.getString("nombre"));
+                arbitro = cargarArbitro(rs);
             }
 
         } catch (SQLException e) {
@@ -108,6 +144,29 @@ public class ArbitroMysql implements ArbitroDAO {
 
         } catch (SQLException e) {
             throw new DAOException("ERROR AL CARGAR EL ARBITRO", e);
+        } finally {
+            DBConexion.closeResources(ps, rs);
+        }
+
+        return arbitros;
+    }
+
+    @Override
+    public List<String> cargarNombres() throws DAOException {
+        List<String> arbitros = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = DBConexion.getConexion().prepareStatement(CARGAR_NOMBRES);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                arbitros.add(rs.getString("nombre"));
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException("ERROR AL CARGAR LOS NOMBRES DE LOS ARBITROS", CARGAR_NOMBRES, e);
         } finally {
             DBConexion.closeResources(ps, rs);
         }

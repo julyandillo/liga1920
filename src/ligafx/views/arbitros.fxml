@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="720.0" styleClass="fondo-panel" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ligafx.controllers.ArbritosController">
+   <children>
+      <ListView fx:id="listaArbitros" layoutX="14.0" layoutY="14.0" prefHeight="576.0" prefWidth="265.0" />
+      <FlowPane fx:id="detalles" layoutX="312.0" layoutY="14.0" orientation="VERTICAL" prefHeight="576.0" prefWidth="393.0">
+         <children>
+            <Label fx:id="partidos" text="Label" />
+            <Label fx:id="partidosVAR" text="Label" />
+            <Label text="Número de tarjetas mostradas:">
+               <FlowPane.margin>
+                  <Insets top="20.0" />
+               </FlowPane.margin>
+            </Label>
+            <Label fx:id="tarjetasAmarillas" text="Label">
+               <FlowPane.margin>
+                  <Insets />
+               </FlowPane.margin>
+            </Label>
+            <Label fx:id="tarjetasRojas" text="Label" />
+            <Label fx:id="penaltis" text="Label">
+               <FlowPane.margin>
+                  <Insets top="20.0" />
+               </FlowPane.margin>
+            </Label>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" top="20.0" />
+         </padding>
+      </FlowPane>
+   </children>
+</AnchorPane>
