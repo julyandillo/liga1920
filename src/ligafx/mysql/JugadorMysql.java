@@ -2,6 +2,7 @@ package ligafx.mysql;
 
 import ligafx.builders.JugadorBuilder;
 import ligafx.dao.DAOException;
+import ligafx.dao.DAOManager;
 import ligafx.dao.JugadorDAO;
 import ligafx.modelos.Jugador;
 import ligafx.util.DBConexion;
@@ -20,7 +21,12 @@ public class JugadorMysql implements JugadorDAO {
             "altura, fecha_nacimiento, nacionalidad, pais_nacimiento, id_equipo, imagen) " +
             "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String CARGAR = "select * from jugador where id_jugador = ?";
+    private static final String CARGAR = "select j.*, count(distinct c.id_cambio) as sale, " +
+            "count(distinct c1.id_cambio) as entra " +
+            "from jugador j " +
+            "left join cambio c on c.id_jugador_sale=j.id_jugador " +
+            "left join cambio c1 on c1.id_jugador_entra=j.id_jugador " +
+            "where j.id_jugador = ?";
 
     private static final String CARGAR_TODOS = "select * from jugador order by nombre";
 
@@ -112,7 +118,7 @@ public class JugadorMysql implements JugadorDAO {
     }
 
     /**
-     * Carga todos los datos de un jugador dado su id, también carga los goles y tarjetas
+     * Carga todos los datos de un jugador dado su id, también carga los goles, tarjetas y cambios
      *
      * @param id id del jugador  para cargar
      * @return objeto Jugador
@@ -130,10 +136,11 @@ public class JugadorMysql implements JugadorDAO {
 
             rs = ps.executeQuery();
             if (rs.next()) {
-                jugador = setValores(rs);
-                // TODO cargar los goles y tarjetas del jugador
-                // jugador.getGoles().addAll();
-                // jugador.getTarjetas.addAll();
+                jugador = creaJugador(rs);
+                jugador.setVecesEntra(rs.getInt("entra"));
+                jugador.setVecesCambiado(rs.getInt("sale"));
+                jugador.getGoles().addAll(DAOManager.getGolDAO().cargarTodosPorJugador(id));
+                jugador.getTarjetas().addAll(DAOManager.getTarjetaDAO().cargarTodasPorJugador(id));
             }
 
         } catch (SQLException ex) {
@@ -158,7 +165,7 @@ public class JugadorMysql implements JugadorDAO {
             rs = ps.executeQuery();
 
             while(rs.next()) {
-                plantilla.add(setValores(rs));
+                plantilla.add(creaJugador(rs));
             }
 
         } catch (SQLException ex) {
@@ -181,7 +188,7 @@ public class JugadorMysql implements JugadorDAO {
             rs = ps.executeQuery();
 
             while(rs.next()) {
-                jugadores.add(setValores(rs));
+                jugadores.add(creaJugador(rs));
             }
 
         } catch (SQLException ex) {
@@ -193,7 +200,7 @@ public class JugadorMysql implements JugadorDAO {
         return jugadores;
     }
 
-    private Jugador setValores(ResultSet rs) throws SQLException {
+    private Jugador creaJugador(ResultSet rs) throws SQLException {
         return new JugadorBuilder().id(rs.getInt("id_jugador"))
                 .nombre(rs.getString("nombre"))
                 .apodo(rs.getString("apodo"))

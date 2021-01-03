@@ -85,7 +85,7 @@ public class PartidoDetallesController implements Initializable {
     }
 
     public void cargarPartido(Partido partido) {
-        SimpleDateFormat formato = new SimpleDateFormat("EEEE d 'de' MMMMM, H:mm");
+        SimpleDateFormat formato = new SimpleDateFormat("EEEE d 'de' MMMMM 'de' yyyy, H:mm");
         fecha.setText(formato.format(partido.getFecha()));
 
         jornada.setText("JORNADA " + partido.getJornada());

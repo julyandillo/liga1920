@@ -20,6 +20,11 @@ import ligafx.util.Util;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -56,6 +61,30 @@ public class PlantillaController implements Initializable {
 
     @FXML
     private Label labelTarjetas;
+
+    @FXML
+    private Label vecesCambiado;
+
+    @FXML
+    private Label vecesEntra;
+
+    @FXML
+    private Label paisNacimiento;
+
+    @FXML
+    private Label nacionalidad;
+
+    @FXML
+    private Label peso;
+
+    @FXML
+    private Label altura;
+
+    @FXML
+    private Label dorsal;
+
+    @FXML
+    private Label fechaNacimiento;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -110,18 +139,28 @@ public class PlantillaController implements Initializable {
         }
     }
 
-    public void cargarDetallesJugador(Jugador jugador) {
-        labelNombreCompleto.setText(jugador.getNombre());
+    public void cargarDetallesJugador(int idJugador) {
         try {
-            jugador.getGoles().clear();
-            jugador.getGoles().addAll(DAOManager.getGolDAO().cargarTodosPorJugador(jugador.getId()));
+            Jugador jugador = DAOManager.getJugadorDAO().cargar(idJugador);
+
+            labelNombreCompleto.setText(jugador.getNombre());
+            dorsal.setText("Dorsal: " + jugador.getDorsal());
+
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("d-MM-yyyy");
+            fechaNacimiento.setText("Fecha de nacimiento: " + formatoFecha.format(jugador.getFechaNacimiento()));
+
+            paisNacimiento.setText("Pais de nacimiento: " + jugador.getPaisNacimiento());
+            nacionalidad.setText("Nacionalidad: " + jugador.getNacionalidad());
+            peso.setText("Peso: " + jugador.getPeso() + " kg");
+            altura.setText("Altura: " + jugador.getAltura() + " cm");
 
             labelGoles.setText("Goles: " + jugador.getGoles().size() + " (" + jugador.getNumeroGolesDePenalti()
                     + " penaltis)");
 
-            jugador.getTarjetas().clear();
-            jugador.getTarjetas().addAll(DAOManager.getTarjetaDAO().cargarTodasPorJugador(jugador.getId()));
             labelTarjetas.setText("Tarjetas: " + jugador.getTarjetas().size());
+
+            vecesCambiado.setText("Número de veces cambiado: " + jugador.getVecesCambiado());
+            vecesEntra.setText("Número de veces que entra al campo: " + jugador.getVecesEntra());
 
         } catch (DAOException e) {
             Util.mostrarMensaje(e.getMensaje(), Alert.AlertType.ERROR);

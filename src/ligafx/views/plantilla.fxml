@@ -67,8 +67,23 @@
             <VBox prefHeight="380.0" prefWidth="350.0">
                <children>
                   <Label fx:id="labelNombreCompleto" text="Label" />
-                  <Label fx:id="labelGoles" text="Label" />
+                  <Label fx:id="dorsal" text="Dorsal:" />
+                  <Label fx:id="fechaNacimiento" text="Label" />
+                  <Label fx:id="nacionalidad" text="Nacionalidad" />
+                  <Label fx:id="paisNacimiento" text="Pais" />
+                  <Label fx:id="peso" text="Label" />
+                  <Label fx:id="altura" text="Label" />
+                  <Label fx:id="labelGoles" text="Label">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></Label>
                   <Label fx:id="labelTarjetas" text="Label" />
+                  <Label fx:id="vecesCambiado" text="Label">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="vecesEntra" text="Label" />
                </children>
                <padding>
                   <Insets left="20.0" top="20.0" />

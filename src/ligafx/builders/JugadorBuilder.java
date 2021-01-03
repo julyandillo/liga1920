@@ -124,6 +124,18 @@ public class JugadorBuilder {
         return this;
     }
 
+    public JugadorBuilder vecesCambiado(int veces) {
+        this.jugador.setVecesCambiado(veces);
+
+        return this;
+    }
+
+    public JugadorBuilder vecesEntra(int veces) {
+        this.jugador.setVecesEntra(veces);
+
+        return this;
+    }
+
     public Jugador build() {
         return this.jugador;
     }

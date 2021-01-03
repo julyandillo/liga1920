@@ -1,10 +1,13 @@
 package ligafx.modelos;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Jugador extends Entidad {
+
+    private enum TipoCambio {
+        ENTRA,
+        SALE
+    }
 
     private String nombre;
 
@@ -27,9 +30,11 @@ public class Jugador extends Entidad {
     private String imagen;
 
     // en lugar de definirlo como ArrayList se define con la interfaz List, cuando se instancie sera un ArrayList
-    private List<Gol> goles;
+    private final List<Gol> goles;
 
-    private List<Tarjeta> tarjetas;
+    private final List<Tarjeta> tarjetas;
+
+    private final Map<TipoCambio, Integer> cambios;
 
     // el id será el que tiene el jugador en la web resultados-futbol.com desde donde se rastrean los datos
     public Jugador(int id) {
@@ -46,8 +51,9 @@ public class Jugador extends Entidad {
         this.altura = 0;
         this.imagen = "";
 
-        this.goles = new ArrayList<>();
-        this.tarjetas = new ArrayList<>();
+        goles = new ArrayList<>();
+        tarjetas = new ArrayList<>();
+        cambios = new EnumMap<>(TipoCambio.class);
     }
 
     public String getNombre() {
@@ -149,4 +155,21 @@ public class Jugador extends Entidad {
 
         return ngoles;
     }
+
+    public int getVecesCambiado() {
+        return cambios.get(TipoCambio.SALE);
+    }
+
+    public void setVecesCambiado(int veces) {
+        cambios.put(TipoCambio.SALE, veces);
+    }
+
+    public int getVecesEntra() {
+        return cambios.get(TipoCambio.ENTRA);
+    }
+
+    public void setVecesEntra(int veces) {
+        cambios.put(TipoCambio.ENTRA, veces);
+    }
+
 }

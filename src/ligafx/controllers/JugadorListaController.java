@@ -41,6 +41,6 @@ public class JugadorListaController implements Initializable {
 
     @FXML
     private void click() {
-        parent.cargarDetallesJugador(jugador);
+        parent.cargarDetallesJugador(jugador.getId());
     }
 }
