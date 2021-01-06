@@ -156,6 +156,18 @@ public class Jugador extends Entidad {
         return ngoles;
     }
 
+    public int getNumeroGolesPropiaPuerta() {
+        int n = 0;
+
+        for (Gol gol: goles) {
+            if (gol.isPropiaMeta()) {
+                n++;
+            }
+        }
+
+        return n;
+    }
+
     public int getVecesCambiado() {
         return cambios.get(TipoCambio.SALE);
     }
@@ -172,4 +184,23 @@ public class Jugador extends Entidad {
         cambios.put(TipoCambio.ENTRA, veces);
     }
 
+    public int getNumeroTarjetasAmarillas() {
+        return getNumeroTarjetas(TipoTarjeta.AMARILLA);
+    }
+
+    public int getNumeroTarjetasRojas() {
+        return getNumeroTarjetas(TipoTarjeta.ROJA);
+    }
+
+    private int getNumeroTarjetas(TipoTarjeta tipo) {
+        int n = 0;
+
+        for (Tarjeta tarjeta : this.tarjetas) {
+            if (tarjeta.getTipo() == tipo) {
+                n++;
+            }
+        }
+
+        return n;
+    }
 }

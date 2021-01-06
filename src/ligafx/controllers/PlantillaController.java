@@ -23,6 +23,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
@@ -86,6 +88,19 @@ public class PlantillaController implements Initializable {
     @FXML
     private Label fechaNacimiento;
 
+    @FXML
+    private Label amarillas;
+
+    @FXML
+    private Label rojas;
+
+    @FXML
+    private Label penaltis;
+
+    @FXML
+    private Label propiaPuerta;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         detalles.setVisible(false);
@@ -147,17 +162,25 @@ public class PlantillaController implements Initializable {
             dorsal.setText("Dorsal: " + jugador.getDorsal());
 
             SimpleDateFormat formatoFecha = new SimpleDateFormat("d-MM-yyyy");
-            fechaNacimiento.setText("Fecha de nacimiento: " + formatoFecha.format(jugador.getFechaNacimiento()));
+            long edad = ChronoUnit.YEARS.between(
+                    LocalDate.parse(formatoFecha.format(jugador.getFechaNacimiento()), DateTimeFormatter.ofPattern("d-MM-yyyy")),
+                    LocalDate.now());
+            fechaNacimiento.setText("Fecha de nacimiento: " + formatoFecha.format(jugador.getFechaNacimiento()) +
+                    " (" + edad + " años)");
+
 
             paisNacimiento.setText("Pais de nacimiento: " + jugador.getPaisNacimiento());
             nacionalidad.setText("Nacionalidad: " + jugador.getNacionalidad());
             peso.setText("Peso: " + jugador.getPeso() + " kg");
             altura.setText("Altura: " + jugador.getAltura() + " cm");
 
-            labelGoles.setText("Goles: " + jugador.getGoles().size() + " (" + jugador.getNumeroGolesDePenalti()
-                    + " penaltis)");
+            labelGoles.setText("Goles: " + jugador.getGoles().size());
+            penaltis.setText("de penalti: " + jugador.getNumeroGolesDePenalti());
+            propiaPuerta.setText("en propia puerta: " + jugador.getNumeroGolesPropiaPuerta());
 
             labelTarjetas.setText("Tarjetas: " + jugador.getTarjetas().size());
+            amarillas.setText("amarillas: " + jugador.getNumeroTarjetasAmarillas());
+            rojas.setText("rojas: " + jugador.getNumeroTarjetasRojas());
 
             vecesCambiado.setText("Número de veces cambiado: " + jugador.getVecesCambiado());
             vecesEntra.setText("Número de veces que entra al campo: " + jugador.getVecesEntra());
